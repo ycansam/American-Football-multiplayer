@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: eedfbd29a932f064c93ae84b7b655a3e
+guid: be0134f27a3654f4abc6a67030e6e73c
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Idle
+    second: Running90L
+  - first:
+      74: -9121621101649706817
+    second: Running90L
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -26,7 +29,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -35,13 +38,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: Running90L
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 117
+      lastFrame: 38
       wrapMode: 0
-      orientationOffsetY: -20
+      orientationOffsetY: 90
       level: 0
       cycleOffset: 0
       loop: 0
@@ -49,19 +52,19 @@ ModelImporter:
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
       transformMask: []
       maskType: 3
-      maskSource: {fileID: 31900000, guid: 77647a00d9b0a3440b2916f90024b8bc, type: 2}
+      maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:

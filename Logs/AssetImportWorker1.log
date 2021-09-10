@@ -1,0 +1,118 @@
+Using pre-set license
+Built from '2020.2/staging' branch; Version is '2020.2.3f1 (8ff31bc5bf5b) revision 9433883'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Home; OS build 19043.1165; Version 2009; 64bit' Language: 'es' Physical Memory: 8183 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+D:\Archivos de Programa\UnityEditors\2020.2.3f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+D:/Documentos/Unity Projects/American-Football-multiplayer
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+49171
+Successfully changed project path to: D:/Documentos/Unity Projects/American-Football-multiplayer
+D:/Documentos/Unity Projects/American-Football-multiplayer
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 57.26 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.3f1 (8ff31bc5bf5b)
+[Subsystems] Discovering subsystems at path D:/Archivos de Programa/UnityEditors/2020.2.3f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Documentos/Unity Projects/American-Football-multiplayer/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1060 6GB (ID=0x1c03)
+    Vendor:   
+    VRAM:     6052 MB
+    Driver:   27.21.14.6647
+Initialize mono
+Mono path[0] = 'D:/Archivos de Programa/UnityEditors/2020.2.3f1/Editor/Data/Managed'
+Mono path[1] = 'D:/Archivos de Programa/UnityEditors/2020.2.3f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'D:/Archivos de Programa/UnityEditors/2020.2.3f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56260
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Archivos de Programa/UnityEditors/2020.2.3f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: D:/Archivos de Programa/UnityEditors/2020.2.3f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002985 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 60.14 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in 16.817 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.001053 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.45 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.949 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.11 seconds
+Refreshing native plugins compatible for Editor in 0.40 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1252 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 61.8 MB.
+System memory in use after: 61.8 MB.
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 1693.
+Total: 3.846600 ms (FindLiveObjects: 0.214300 ms CreateObjectMapping: 0.086900 ms MarkObjects: 3.417900 ms  DeleteObjects: 0.125100 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Animations/PaladinAnimator.controller
+  artifactKey: Guid(1ca10eadd7f0fb54b80c567b26551bef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/PaladinAnimator.controller using Guid(1ca10eadd7f0fb54b80c567b26551bef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a6ce5ff27f727cc1cd0492eae3b743e3') in 0.081429 seconds
+  Import took 0.085803 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000961 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.35 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.668 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.45 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1247 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 61.8 MB.
+System memory in use after: 61.8 MB.
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 1696.
+Total: 2.312100 ms (FindLiveObjects: 0.167600 ms CreateObjectMapping: 0.077600 ms MarkObjects: 1.998100 ms  DeleteObjects: 0.067200 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 83.354954 seconds.
+  path: Assets/Animations/PaladinAnimator.controller
+  artifactKey: Guid(1ca10eadd7f0fb54b80c567b26551bef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/PaladinAnimator.controller using Guid(1ca10eadd7f0fb54b80c567b26551bef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ffb723cdccef7d353414632912319dc4') in 0.025588 seconds
+  Import took 0.028849 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

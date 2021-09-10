@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: eedfbd29a932f064c93ae84b7b655a3e
+guid: 42e85b41efb780942a852fa327e546d7
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Idle
+    second: Punching
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -24,7 +24,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    importAnimatedCustomProperties: 0
+    importAnimatedCustomProperties: 1
     importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
@@ -35,20 +35,20 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: Punching
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 117
+      lastFrame: 61
       wrapMode: 0
-      orientationOffsetY: -20
+      orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 1
+      loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
@@ -61,7 +61,7 @@ ModelImporter:
       events: []
       transformMask: []
       maskType: 3
-      maskSource: {fileID: 31900000, guid: 77647a00d9b0a3440b2916f90024b8bc, type: 2}
+      maskSource: {fileID: 31900000, guid: c08a1496880ffd64baffe93b4bfbe9f4, type: 2}
       additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
