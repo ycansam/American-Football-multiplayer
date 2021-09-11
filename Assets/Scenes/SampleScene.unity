@@ -624,9 +624,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1146795047}
   - component: {fileID: 1146795049}
+  - component: {fileID: 1146795052}
   - component: {fileID: 1146795048}
   - component: {fileID: 1146795050}
-  - component: {fileID: 1146795052}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -664,6 +664,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   jumpForce: 5
+  sprintFactor: 1.5
+  transitionSprintSeconds: 2.5
 --- !u!143 &1146795049
 CharacterController:
   m_ObjectHideFlags: 0
@@ -803,7 +805,7 @@ Transform:
   m_GameObject: {fileID: 1963538152}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.62, z: 0}
-  m_LocalScale: {x: 4.56, y: 4.56, z: 4.56}
+  m_LocalScale: {x: 26.008255, y: 26.008255, z: 26.008255}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -1215,7 +1217,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyLookingGameobject: {fileID: 734679887}
-  head: {fileID: 1361540181438621516}
   ikActive: 1
   layerHorizontal: 1
   layerAiming: 2

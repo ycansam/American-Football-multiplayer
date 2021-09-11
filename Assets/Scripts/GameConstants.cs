@@ -20,6 +20,7 @@ public static class GameConstants
     public const KeyCode KEY_RIGHT = KeyCode.D;
     public const KeyCode KEY_LEFT = KeyCode.A;
     public const KeyCode KEY_DOWNWARDS = KeyCode.S;
+    public const KeyCode KEY_SPRINT = KeyCode.LeftShift;
     [Header("Layers")]
     public const int LAYER_ESTRUCTURES = 6;
     [Header("TAGS")]
@@ -30,4 +31,7 @@ public static class GameConstants
     public const string  ANIMATOR_VERTICAL = "VERTICAL";
     public const string  ANIMATOR_SPEED = "SPEED";
     public const string  ANIMATOR_AIMING = "AIMING";
+    public const string  ANIMATOR_SPRINT_MULTIPLIER = "SPRINT MULTIPLIER";
+    [Header("Animations Layers")]
+    public const string  ANIMATOR_LAYER_SPRINT = "Sprinting";
 }

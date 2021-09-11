@@ -5,9 +5,15 @@ using UnityEngine;
 public class CharAnimations : MonoBehaviour
 {
     private Animator animator;
+
+    public static float sprintFactor;
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        SetSprintMultipler(CharAnimations.sprintFactor);
+    }
+    public void SetSprintMultipler(float multiplier){
+        animator.SetFloat(GameConstants.ANIMATOR_SPRINT_MULTIPLIER, multiplier);
     }
 
     private void Update()
