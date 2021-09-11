@@ -200,9 +200,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damping: {x: 0, y: 0, z: 0}
-  ShoulderOffset: {x: 0, y: 0, z: -0.07}
+  ShoulderOffset: {x: 0.89, y: 0, z: -0.07}
   VerticalArmLength: 0.74
-  CameraSide: 1
+  CameraSide: 0.5
   CameraDistance: 2.6
   CameraCollisionFilter:
     serializedVersion: 2
@@ -365,7 +365,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 734679886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.075, z: 0.966}
+  m_LocalPosition: {x: 0, y: -0.149, z: 14.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 116498617}
@@ -448,8 +448,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843230667}
-  m_LocalRotation: {x: 0.06328726, y: 0, z: 0, w: 0.9979954}
-  m_LocalPosition: {x: 0, y: 1.955, z: -2.7189999}
+  m_LocalRotation: {x: 0.06328724, y: 0, z: 0, w: 0.9979954}
+  m_LocalPosition: {x: 0, y: 2.463, z: -2.7189999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -642,7 +642,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146795046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.29, z: 0}
+  m_LocalPosition: {x: 0, y: 0.218, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 116498617}
@@ -675,7 +675,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.75
+  m_Height: 1.8
   m_Radius: 0.21
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -694,6 +694,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58598fcb3743d0e4a83a93f07efe7436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cinemachineBase: {fileID: 2008961728}
+  fieldOfViewOnAim: 50
   camSensitivity: 5
   neck: {fileID: 116498617}
   verticalUpClamp: 45
@@ -724,7 +726,7 @@ GameObject:
   - component: {fileID: 1963538153}
   m_Layer: 6
   m_Name: Suelo
-  m_TagString: Untagged
+  m_TagString: Suelo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -817,7 +819,7 @@ GameObject:
   - component: {fileID: 2008961729}
   - component: {fileID: 2008961728}
   m_Layer: 0
-  m_Name: CM vcam1
+  m_Name: ThirdPersonCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -865,8 +867,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008961727}
-  m_LocalRotation: {x: 0.06328726, y: 0, z: 0, w: 0.9979954}
-  m_LocalPosition: {x: 0, y: 1.955, z: -2.7189999}
+  m_LocalRotation: {x: 0.06328724, y: 0, z: 0, w: 0.9979954}
+  m_LocalPosition: {x: 0, y: 2.463, z: -2.7189999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 301417502}
@@ -1213,7 +1215,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyLookingGameobject: {fileID: 734679887}
+  head: {fileID: 1361540181438621516}
   ikActive: 1
+  layerHorizontal: 1
+  layerAiming: 2
 --- !u!4 &936440892868003123
 Transform:
   m_ObjectHideFlags: 0

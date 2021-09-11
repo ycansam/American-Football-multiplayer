@@ -8,7 +8,7 @@ public class CharIKAnimator : MonoBehaviour
     [SerializeField] Transform bodyLookingGameobject = null;
     [SerializeField] bool ikActive = false;
     [SerializeField] int layerHorizontal = 1;
-    [SerializeField] int layerHorizontalBckw = 2;
+    [SerializeField] int layerAiming = 2;
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -21,11 +21,24 @@ public class CharIKAnimator : MonoBehaviour
             {
                 if (bodyLookingGameobject != null)
                 {
-                    if (!Input.GetKey(GameConstants.KEY_FREE_VISION) && Input.GetAxis(GameConstants.HORIZONTAL) == 0)
-                        animator.SetLookAtWeight(1, 1);
+                    if (!Input.GetKey(GameConstants.KEY_FREE_VISION))
+                        animator.SetLookAtWeight(1, 0.3f, 1, 1, 0); // se gira la cabeza al maximo pero el cuerpo no
+                    else if (Input.GetKey(GameConstants.KEY_FREE_VISION) && Input.GetAxisRaw(GameConstants.HORIZONTAL) != 0 || Input.GetAxisRaw(GameConstants.VERTICAL) != 0)
+                        animator.SetLookAtWeight(1, 0.3f, 1, 1, 0.5f); // se gira la cabeza al maximo pero el cuerpo no
+                    else if (Input.GetAxisRaw(GameConstants.HORIZONTAL) != 0 || Input.GetAxisRaw(GameConstants.VERTICAL) != 0)
+                        animator.SetLookAtWeight(1, 1f, 1, 1, 1); // se gira todo limitado
                     else
-                        animator.SetLookAtWeight(1);
+                        animator.SetLookAtWeight(1); // se gira todo limitado
+
+
+                    if (CamController.Aiming && !Input.GetKey(GameConstants.KEY_FREE_VISION)) // si esta apuntando el cuerpo se puede girar lo maximo posible
+                        animator.SetLookAtWeight(1, 1, 1, 1, 0);
+                    else if (CamController.Aiming && Input.GetKey(GameConstants.KEY_FREE_VISION))
+                        animator.SetLookAtWeight(0); 
+
+
                     animator.SetLookAtPosition(bodyLookingGameobject.position);
+                    animator.SetLayerWeight(layerAiming, System.Convert.ToSingle(CamController.Aiming));
                 }
             }
             else
@@ -52,46 +65,8 @@ public class CharIKAnimator : MonoBehaviour
             else if (horizontal < 0)
                 animator.SetLayerWeight(layerHorizontal, -horizontal);
 
+            if (horizontal < 0.2 || horizontal > -0.2)
+                animator.SetLayerWeight(layerHorizontal, 0);
         }
-        // Debug.Log(animator.GetLayerWeight(layerHorizontalBckw));
-        // if (horizontalRaw > 0)
-        // {
-        //     if (verticalRaw != 1)
-        //     {
-        //         animator.SetLayerWeight(layerHorizontal, horizontalRaw);
-        //     }
-        //     else
-        //     {
-        //         animator.SetLayerWeight(layerHorizontal, horizontalRaw);
-        //     }
-
-        // }
-        // else if (horizontalRaw < 0)
-        // {
-        //     if (verticalRaw != 1)
-        //     {
-        //         animator.SetLayerWeight(layerHorizontal, -horizontalRaw);
-        //     }
-        //     else
-        //     {
-        //         animator.SetLayerWeight(layerHorizontal, (-horizontalRaw - (-vertical)) / 2);
-        //     }
-        // }
-        // else
-        // {
-        //     animator.SetLayerWeight(layerHorizontal, Input.GetAxis(GameConstants.HORIZONTAL));
-        // }
-        // if(verticalRaw == -1){
-        //     animator.SetLayerWeight(layerHorizontalBckw, -Input.GetAxis(GameConstants.VERTICAL));
-        // }else if(horizontalRaw != 0){
-        //     animator.SetLayerWeight(layerHorizontalBckw, 1);
-        // }
-        // if(verticalRaw == 1){
-        //     animator.SetLayerWeight(layerHorizontal, Input.GetAxis(GameConstants.VERTICAL));
-        // }else{
-        //     animator.SetLayerWeight(layerHorizontal, 0);
-
-        // }
-
     }
 }

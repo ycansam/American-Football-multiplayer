@@ -11,6 +11,7 @@ public class CharController : MonoBehaviour
     [Header("Move Settings")]
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
+    private bool grounded = false;
 
     private float vertical_axis;
     private float horizontal_axis;
@@ -41,18 +42,24 @@ public class CharController : MonoBehaviour
         vertical_axis = Input.GetAxis(GameConstants.VERTICAL);
         horizontal_axis = Input.GetAxis(GameConstants.HORIZONTAL);
     }
-
+    /* 
+    *   PlayerMove() - Movimiento del jugador
+    */
     private void PlayerMove()
     {
-        Vector3 move = (transform.forward * vertical_axis * speed) + (transform.right * horizontal_axis * speed) ;
+        Vector3 move = (transform.forward * vertical_axis * speed) + (transform.right * horizontal_axis * speed);
         Vector3 clampedMove = Vector3.ClampMagnitude(move, speed); // definiendo la magnitud maxima para la velocidad del personaje
-        CharController.actualSpeed =  clampedMove.magnitude; // setting la variable para poder usarse publicamente en animations
-        
+        CharController.actualSpeed = clampedMove.magnitude; // setting la variable para poder usarse publicamente en animations
+
         characterController.Move(clampedMove * Time.deltaTime);
     }
+    /* 
+    *   PlayerGravity() - Movimiento de caiga del jugador
+    * @param 
+    */
     private void PlayerGravity()
     {
-        if (characterController.isGrounded)
+        if (grounded)
         {
             verticalSpeed = -gravity * Time.fixedDeltaTime;
             if (Input.GetKeyDown(KeyCode.Space))
@@ -64,7 +71,8 @@ public class CharController : MonoBehaviour
         {
             verticalSpeed -= gravity * Time.fixedDeltaTime;
         }
-        characterController.Move((transform.up * verticalSpeed)* Time.fixedDeltaTime);
+        characterController.Move((transform.up * verticalSpeed) * Time.fixedDeltaTime);
+        grounded = characterController.isGrounded;
     }
 
 }
