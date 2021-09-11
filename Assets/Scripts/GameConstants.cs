@@ -12,6 +12,11 @@ public static class GameConstants
 
     [Header("Inputs")]
     public const KeyCode KEY_FREE_VISION = KeyCode.LeftAlt;
+    [Header("Inputs Movements")]
+    public const KeyCode KEY_FORWARD = KeyCode.W;
+    public const KeyCode KEY_RIGHT = KeyCode.D;
+    public const KeyCode KEY_LEFT = KeyCode.A;
+    public const KeyCode KEY_DOWNWARDS = KeyCode.S;
     [Header("Layers")]
     public const int LAYER_ESTRUCTURES = 6;
     [Header("Animations Parameters")]

@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 1f5bae6a955aa074db8a1ef5024dc6cf
+guid: 052e2389c3deb9347a558e1a3b48cc1e
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Running Backward
+    second: Running Backward 90 H
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,13 +35,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Running Backward
+      name: Running Backward 90 H
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
       lastFrame: 34
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: 90
       level: 0
       cycleOffset: 0
       loop: 0
@@ -51,7 +51,7 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 0
       loopBlendPositionXZ: 1
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0

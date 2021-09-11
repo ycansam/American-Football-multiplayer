@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharAnimations : MonoBehaviour
 {
     private Animator animator;
+    private bool playingWithKeyboard = true;
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -13,7 +14,8 @@ public class CharAnimations : MonoBehaviour
     private void Update()
     {
         PunchAnimation();
-        RunAnimation(Input.GetAxis(GameConstants.HORIZONTAL), Input.GetAxis(GameConstants.VERTICAL));
+        if (playingWithKeyboard)
+            RunAnimationKeyboard(Input.GetAxis(GameConstants.HORIZONTAL), Input.GetAxis(GameConstants.VERTICAL));
 
     }
     private void PunchAnimation()
@@ -27,26 +29,36 @@ public class CharAnimations : MonoBehaviour
             animator.ResetTrigger("PUNCH");
         }
     }
-    private void RunAnimation(float horizontal, float vertical)
+    private void RunAnimationKeyboard(float horizontal, float vertical)
     {
         animator.SetFloat(GameConstants.ANIMATOR_SPEED, CharController.ActualSpeed);
         animator.SetFloat(GameConstants.ANIMATOR_VERTICAL, vertical);
-        Debug.Log(horizontal * 2 + vertical);
+        animator.SetFloat(GameConstants.ANIMATOR_HORIZONTAL, horizontal);
 
-        if (Input.GetAxisRaw(GameConstants.HORIZONTAL) > 0)
-        {
-            if ((horizontal * 2) - vertical > 0)
-                animator.SetFloat(GameConstants.ANIMATOR_HORIZONTAL, (horizontal * 2) - vertical);
-        }
-        else if (Input.GetAxisRaw(GameConstants.HORIZONTAL) < 0)
-        {
-            if ((horizontal * 2) + vertical < 0)
-            animator.SetFloat(GameConstants.ANIMATOR_HORIZONTAL, (horizontal * 2) + vertical);
-        }
-        else if (Input.GetAxisRaw(GameConstants.HORIZONTAL) == 0)
-        {
-            animator.SetFloat(GameConstants.ANIMATOR_HORIZONTAL, horizontal);
-        }
+
+        // if (Input.GetAxisRaw(GameConstants.VERTICAL) == -1)
+        // {
+
+        //     animator.SetFloat(GameConstants.ANIMATOR_HORIZONTAL, horizontal);
+
+        // }
+        // else
+        // {
+        //     if (Input.GetAxisRaw(GameConstants.HORIZONTAL) > 0)
+        //     {
+        //         if ((horizontal * 2) - vertical > 0)
+        //             animator.SetFloat(GameConstants.ANIMATOR_HORIZONTAL, (horizontal * 2) - vertical);
+        //     }
+        //     else if (Input.GetAxisRaw(GameConstants.HORIZONTAL) < 0)
+        //     {
+        //         if ((horizontal * 2) + vertical < 0)
+        //             animator.SetFloat(GameConstants.ANIMATOR_HORIZONTAL, (horizontal * 2) + vertical);
+        //     }
+        //     else if (Input.GetAxisRaw(GameConstants.HORIZONTAL) == 0)
+        //     {
+        //         animator.SetFloat(GameConstants.ANIMATOR_HORIZONTAL, horizontal);
+        //     }
+        // }
 
     }
 

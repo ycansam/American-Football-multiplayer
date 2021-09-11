@@ -7,6 +7,8 @@ public class CharIKAnimator : MonoBehaviour
     private Animator animator;
     [SerializeField] Transform bodyLookingGameobject = null;
     [SerializeField] bool ikActive = false;
+    [SerializeField] int layerHorizontal = 1;
+    [SerializeField] int layerHorizontalBckw = 2;
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -39,34 +41,57 @@ public class CharIKAnimator : MonoBehaviour
     {
         float horizontal = Input.GetAxis(GameConstants.HORIZONTAL);
         float vertical = Input.GetAxis(GameConstants.VERTICAL);
-        if (horizontalRaw > 0)
+        if (horizontalRaw != 0 || verticalRaw != 0)
         {
-            if (verticalRaw != 1)
-            {
-                animator.SetLayerWeight(1, horizontalRaw);
-            }
-            else
-            {
-                animator.SetLayerWeight(1, horizontalRaw);
-
-            }
-
-        }
-        else if (horizontalRaw < 0)
-        {
-            if (verticalRaw != 1)
-            {
-                animator.SetLayerWeight(1, -horizontalRaw);
-            }
-            else
-            {
-                animator.SetLayerWeight(1, (-horizontalRaw - (-vertical)) / 2);
-            }
+            animator.SetLayerWeight(layerHorizontal, 1);
         }
         else
         {
-            animator.SetLayerWeight(1, Input.GetAxis(GameConstants.HORIZONTAL));
+            if (horizontal > 0)
+                animator.SetLayerWeight(layerHorizontal, horizontal);
+            else if (horizontal < 0)
+                animator.SetLayerWeight(layerHorizontal, -horizontal);
+
         }
+        // Debug.Log(animator.GetLayerWeight(layerHorizontalBckw));
+        // if (horizontalRaw > 0)
+        // {
+        //     if (verticalRaw != 1)
+        //     {
+        //         animator.SetLayerWeight(layerHorizontal, horizontalRaw);
+        //     }
+        //     else
+        //     {
+        //         animator.SetLayerWeight(layerHorizontal, horizontalRaw);
+        //     }
+
+        // }
+        // else if (horizontalRaw < 0)
+        // {
+        //     if (verticalRaw != 1)
+        //     {
+        //         animator.SetLayerWeight(layerHorizontal, -horizontalRaw);
+        //     }
+        //     else
+        //     {
+        //         animator.SetLayerWeight(layerHorizontal, (-horizontalRaw - (-vertical)) / 2);
+        //     }
+        // }
+        // else
+        // {
+        //     animator.SetLayerWeight(layerHorizontal, Input.GetAxis(GameConstants.HORIZONTAL));
+        // }
+        // if(verticalRaw == -1){
+        //     animator.SetLayerWeight(layerHorizontalBckw, -Input.GetAxis(GameConstants.VERTICAL));
+        // }else if(horizontalRaw != 0){
+        //     animator.SetLayerWeight(layerHorizontalBckw, 1);
+        // }
+        // if(verticalRaw == 1){
+        //     animator.SetLayerWeight(layerHorizontal, Input.GetAxis(GameConstants.VERTICAL));
+        // }else{
+        //     animator.SetLayerWeight(layerHorizontal, 0);
+
+        // }
 
     }
 }

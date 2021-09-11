@@ -54,7 +54,6 @@ public class CharController : MonoBehaviour
     {
         if (characterController.isGrounded)
         {
-            Debug.Log(characterController.isGrounded);
             verticalSpeed = -gravity * Time.fixedDeltaTime;
             if (Input.GetKeyDown(KeyCode.Space))
             {
