@@ -13,7 +13,7 @@ public class CharAnimations : MonoBehaviour
         SetSprintMultipler(CharAnimations.sprintFactor);
     }
     public void SetSprintMultipler(float multiplier){
-        animator.SetFloat(GameConstants.ANIMATOR_SPRINT_MULTIPLIER, multiplier);
+        animator.SetFloat(GameConstants.ANIMATOR_PARAMETER_SPRINT_MULTIPLIER, multiplier);
     }
 
     private void Update()
@@ -26,21 +26,21 @@ public class CharAnimations : MonoBehaviour
 
     private void RunAnimation(float horizontal, float vertical)
     {
-        animator.SetFloat(GameConstants.ANIMATOR_SPEED, CharController.ActualSpeed);
-        animator.SetFloat(GameConstants.ANIMATOR_VERTICAL, vertical);
-        animator.SetFloat(GameConstants.ANIMATOR_HORIZONTAL, horizontal);
+        animator.SetFloat(GameConstants.ANIMATOR_PARAMETER_SPEED, CharController.ActualSpeed);
+        animator.SetFloat(GameConstants.ANIMATOR_PARAMETER_VERTICAL, vertical);
+        animator.SetFloat(GameConstants.ANIMATOR_PARAMETER_HORIZONTAL, horizontal);
     }
     private void AimAnimation(){
-        animator.SetBool(GameConstants.ANIMATOR_AIMING, CamController.Aiming);
+        animator.SetBool(GameConstants.ANIMATOR_PARAMETER_AIMING, CamController.Aiming);
     }
 
     private void PunchAnimation()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown(GameConstants.BUTTON_FIRE1))
         {
             animator.SetTrigger("PUNCH");
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetButtonUp(GameConstants.BUTTON_FIRE1))
         {
             animator.ResetTrigger("PUNCH");
         }

@@ -7,8 +7,6 @@ public class CharIKAnimator : MonoBehaviour
     private Animator animator;
     [SerializeField] Transform bodyLookingGameobject = null;
     [SerializeField] bool ikActive = false;
-    [SerializeField] int layerHorizontal = 1;
-    [SerializeField] int layerAiming = 2;
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -31,6 +29,7 @@ public class CharIKAnimator : MonoBehaviour
                 animator.SetLookAtWeight(0, 0);
             }
             SetWeightSprint(CharController.SprintWeight);
+
             SetAnimationDirectionRunning(Input.GetAxisRaw(GameConstants.HORIZONTAL), Input.GetAxisRaw(GameConstants.VERTICAL));
         }
     }
@@ -57,7 +56,9 @@ public class CharIKAnimator : MonoBehaviour
 
 
         animator.SetLookAtPosition(bodyLookingGameobject.position);
-        animator.SetLayerWeight(layerAiming, System.Convert.ToSingle(CamController.Aiming));
+
+        int index = animator.GetLayerIndex(GameConstants.ANIMATOR_LAYER_AIMING);
+        animator.SetLayerWeight(index, System.Convert.ToSingle(CamController.Aiming));
     }
 
 
@@ -68,25 +69,26 @@ public class CharIKAnimator : MonoBehaviour
     /// </summary>
     private void SetAnimationDirectionRunning(float horizontalRaw, float verticalRaw)
     {
+        int index = animator.GetLayerIndex(GameConstants.ANIMATOR_LAYER_HORIZONTAL);
         float horizontal = Input.GetAxis(GameConstants.HORIZONTAL);
         float vertical = Input.GetAxis(GameConstants.VERTICAL);
 
         if (horizontalRaw != 0 || verticalRaw != 0)
         {
             // si el jugador se mueve comenzaran las animaciones
-            animator.SetLayerWeight(layerHorizontal, 1);
+            animator.SetLayerWeight(index, 1);
         }
         else
         {
             // si el jugaddor empieza a moverse izquierda o derecha tambien se activa por la cantidad que haya en el horizontal
             if (horizontal > 0)
-                animator.SetLayerWeight(layerHorizontal, horizontal);
+                animator.SetLayerWeight(index, horizontal);
             else if (horizontal < 0)
-                animator.SetLayerWeight(layerHorizontal, -1*(horizontal));
+                animator.SetLayerWeight(index, -1 * (horizontal));
 
             // correccion de error para el mando para ponerla a 0 y se quede en idle.
             if (horizontal < 0.2 || horizontal < -0.2)
-                animator.SetLayerWeight(layerHorizontal, 0);
+                animator.SetLayerWeight(index, 0);
         }
     }
     /// <summary ="SetWeightSprint()">

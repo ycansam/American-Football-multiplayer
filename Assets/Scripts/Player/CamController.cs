@@ -20,9 +20,9 @@ public class CamController : MonoBehaviour
     public static bool Aiming
     {
         get => aiming;
+        set => aiming = value;
     }
     private static bool aiming = false;
-
     void Update()
     {
         GetMouseInput();
@@ -33,9 +33,6 @@ public class CamController : MonoBehaviour
     {
         mouseX = Input.GetAxis(GameConstants.MOUSE_X);
         mouseY = Input.GetAxis(GameConstants.MOUSE_Y);
-
-        // activa el aiming si esta pulsado el boton derecho del mouse
-        CamController.aiming = Input.GetMouseButton(1);
     }
     private void Aim()
     {

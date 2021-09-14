@@ -21,17 +21,22 @@ public static class GameConstants
     public const KeyCode KEY_LEFT = KeyCode.A;
     public const KeyCode KEY_DOWNWARDS = KeyCode.S;
     public const KeyCode KEY_SPRINT = KeyCode.LeftShift;
+    public const string BUTTON_FIRE1 = "Fire1";
+    public const string BUTTON_FIRE2 = "Fire2";
     [Header("Layers")]
     public const int LAYER_ESTRUCTURES = 6;
     [Header("TAGS")]
     public const string TAG_SUELO = "Suelo";
+    public const string TAG_BALON = "Balon";
 
     [Header("Animations Parameters")]
-    public const string  ANIMATOR_HORIZONTAL = "HORIZONTAL";
-    public const string  ANIMATOR_VERTICAL = "VERTICAL";
-    public const string  ANIMATOR_SPEED = "SPEED";
-    public const string  ANIMATOR_AIMING = "AIMING";
-    public const string  ANIMATOR_SPRINT_MULTIPLIER = "SPRINT MULTIPLIER";
+    public const string  ANIMATOR_PARAMETER_HORIZONTAL = "HORIZONTAL";
+    public const string  ANIMATOR_PARAMETER_VERTICAL = "VERTICAL";
+    public const string  ANIMATOR_PARAMETER_SPEED = "SPEED";
+    public const string  ANIMATOR_PARAMETER_AIMING = "AIMING";
+    public const string  ANIMATOR_PARAMETER_SPRINT_MULTIPLIER = "SPRINT MULTIPLIER";
     [Header("Animations Layers")]
     public const string  ANIMATOR_LAYER_SPRINT = "Sprinting";
+    public const string  ANIMATOR_LAYER_HORIZONTAL = "Horizontal";
+    public const string  ANIMATOR_LAYER_AIMING = "Aiming";
 }

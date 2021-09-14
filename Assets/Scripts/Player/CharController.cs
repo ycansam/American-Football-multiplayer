@@ -3,26 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharBallController))]
+// [RequireComponent(typeof(Rigidbody))]
 public class CharController : MonoBehaviour
 {
     [Header("Components")]
     // componentes
     private CharacterController characterController;
+    private CharBallController charBallController;
+    private Rigidbody rb;
+    private ThrowBall throwBallController;
 
     [Header("Move Settings")]
     [SerializeField] private float speed;
+    [SerializeField] private float speedWithBall;
     [SerializeField] private float jumpForce;
     [SerializeField] private float sprintFactor;
     [SerializeField] float transitionSprintSeconds;
     [Header("Variables")]
     private bool grounded = false;
+    private bool aiming = false;
+    bool hasBall;                   // si el jugador tiene la bola o no
 
     private float vertical_axis;
     private float horizontal_axis;
 
     private float gravity;
     private float verticalSpeed;
-
 
     bool sprinting = false;
     float timer = 0;
@@ -43,6 +50,8 @@ public class CharController : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        charBallController = GetComponent<CharBallController>();
+        throwBallController = GetComponent<ThrowBall>();
         gravity = GameConstants.PLAYERS_GRAVITY;
 
         // pasando los valores del multiplicador a las animaciones
@@ -52,16 +61,21 @@ public class CharController : MonoBehaviour
     void Update()
     {
         GetInput();
-
+        PlayerWithBallActions();
         if (!sprinting)
         {
-            PlayerMove();
+            if (!hasBall)
+                PlayerMove(speed); // corre normal
+            else
+                PlayerMove(speedWithBall); // corre con la bola
+
             ResetTimersSprint();
         }
         else
         {
             Sprint();
         }
+
     }
 
     private void FixedUpdate()
@@ -78,18 +92,45 @@ public class CharController : MonoBehaviour
         horizontal_axis = Input.GetAxis(GameConstants.HORIZONTAL);
 
         sprinting = Input.GetKey(GameConstants.KEY_SPRINT);
+        CamController.Aiming = Input.GetButton(GameConstants.BUTTON_FIRE2);
+
+        aiming = CamController.Aiming;
+        hasBall = charBallController.ballInPossesion; // control sobre la bola. Si exite true, else not
 
         // reseteo el sprint si el jugador va a izquierda o derecha
-        if (Input.GetAxis(GameConstants.HORIZONTAL) > 0.2f || Input.GetAxis(GameConstants.HORIZONTAL) < -0.2f || Input.GetAxis(GameConstants.VERTICAL) < 0.2f)
+        if (Input.GetAxis(GameConstants.HORIZONTAL) > 0.2f
+        || Input.GetAxis(GameConstants.HORIZONTAL) < -0.2f
+        || Input.GetAxis(GameConstants.VERTICAL) < 0.2f
+        || hasBall)
         {
             sprinting = false;
-
         }
     }
+
+    /// <summary name="PlayerWithBallActions()">
+    /// Acciones cuando tiene la bola
+    /// </summary>
+    bool startedCharge = false;
+    private void PlayerWithBallActions()
+    {
+        bool throwing = Input.GetButton(GameConstants.BUTTON_FIRE1);
+        if (aiming && throwing && hasBall)
+        {
+            // se carga la bola para lanzarse
+           startedCharge = throwBallController.ChargeThrow();
+        }else if(!throwing && hasBall && startedCharge){
+            // cuando se suelta el boton se dispara la bola y la libera
+            startedCharge = false;
+            throwBallController.Throw(charBallController.ballInPossesion);
+            charBallController.RemoveParentFromBall();
+        }
+    }
+
     /// <summary ="PlayerMove()">
     /// Movimiento del jugador
+    /// speed segun tiene posesion de la bola o no
     /// </summary>
-    private void PlayerMove()
+    private void PlayerMove(float speed)
     {
         Vector3 move = (transform.forward * vertical_axis * speed) + (transform.right * horizontal_axis * speed);
         Vector3 clampedMove = Vector3.ClampMagnitude(move, speed); // definiendo la magnitud maxima para la velocidad del personaje
@@ -170,5 +211,7 @@ public class CharController : MonoBehaviour
         characterController.Move((transform.up * verticalSpeed) * Time.fixedDeltaTime);
         grounded = characterController.isGrounded;
     }
+
+
 
 }
