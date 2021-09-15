@@ -8,8 +8,8 @@ public class CharBallController : MonoBehaviour
     [Header("Transforms")]
     [SerializeField] private Transform playerHand;
     [SerializeField] private Transform ballLiberationPos;
+    [SerializeField] private Collider playerTrigger;
     [HideInInspector] public Transform ballInPossesion;
-
     private void Update()
     {
         if (ballInPossesion)
@@ -17,6 +17,19 @@ public class CharBallController : MonoBehaviour
             ballInPossesion.position = playerHand.position;
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        BallScrpt ball = other.GetComponent<BallScrpt>();
+        if (ball)
+        {
+            bool playerAiming = CamController.Aiming;
+            if (!playerAiming)
+            {
+                ball.SetBallToPlayer(transform.GetComponent<CharBallController>());
+            }
+        }
+    }
+
     public void SetBallInPossesion(Transform ball)
     {
         if (ball.tag == GameConstants.TAG_BALON)
@@ -44,5 +57,13 @@ public class CharBallController : MonoBehaviour
     {
         ballInPossesion.SetParent(null); // desactiva del parent
         ballInPossesion = null;
+        StartCoroutine(DesactivateColliderBySeconds()); // desactiva el trigger del jugador durante 1 segundo
+    }
+
+    IEnumerator DesactivateColliderBySeconds()
+    {
+        playerTrigger.enabled = false;
+        yield return new WaitForSeconds(1f);
+        playerTrigger.enabled = true;
     }
 }

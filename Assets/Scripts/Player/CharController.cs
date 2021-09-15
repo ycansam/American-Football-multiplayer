@@ -8,10 +8,10 @@ using UnityEngine;
 public class CharController : MonoBehaviour
 {
     [Header("Components")]
+    [SerializeField] Shield playerShield;
     // componentes
     private CharacterController characterController;
     private CharBallController charBallController;
-    private Rigidbody rb;
     private ThrowBall throwBallController;
 
     [Header("Move Settings")]
@@ -61,7 +61,10 @@ public class CharController : MonoBehaviour
     void Update()
     {
         GetInput();
+
         PlayerWithBallActions();
+        PlayerShield();
+
         if (!sprinting)
         {
             if (!hasBall)
@@ -117,12 +120,24 @@ public class CharController : MonoBehaviour
         if (aiming && throwing && hasBall)
         {
             // se carga la bola para lanzarse
-           startedCharge = throwBallController.ChargeThrow();
-        }else if(!throwing && hasBall && startedCharge){
+            startedCharge = throwBallController.ChargeThrow();
+        }
+        else if (!throwing && hasBall && startedCharge)
+        {
             // cuando se suelta el boton se dispara la bola y la libera
             startedCharge = false;
-            throwBallController.Throw(charBallController.ballInPossesion);
+            throwBallController.Throw(charBallController.ballInPossesion, CharController.ActualSpeed);
             charBallController.RemoveParentFromBall();
+        }
+    }
+
+    private void PlayerShield()
+    {
+        if (playerShield && aiming && !hasBall && !playerShield.GetOpenShield())
+        {
+            playerShield.OpenShield();
+        }else if(playerShield && !aiming && !hasBall && playerShield.GetOpenShield()){
+            playerShield.CloseShield();
         }
     }
 
@@ -213,5 +228,34 @@ public class CharController : MonoBehaviour
     }
 
 
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
 
+        if (body)
+        {
+            BallScrpt ball = body.GetComponent<BallScrpt>();
+            CheckColliderByHit(hit, body, ball.transform);
+        }
+    }
+    void CheckColliderByHit(ControllerColliderHit hit, Rigidbody body, Transform Object)
+    {
+        // no rigidbody no object to compare
+        if (body == null || body.isKinematic || !Object)
+            return;
+
+        // We dont want to push objects below us
+        if (hit.moveDirection.y < -0.3f)
+            return;
+
+        // Calculate push direction from move direction,
+        // we only push objects to the sides never up and down
+        Vector3 pushDir = new Vector3(hit.moveDirection.x, hit.moveDirection.y, hit.moveDirection.z);
+
+        // If you know how fast your character is trying to move,
+        // then you can also multiply the push velocity by that.
+
+        // Apply the push
+        body.AddForce(pushDir * CharController.ActualSpeed, ForceMode.Impulse);
+    }
 }

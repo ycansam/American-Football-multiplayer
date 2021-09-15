@@ -12,21 +12,17 @@ public class BallScrpt : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-
-    private void OnTriggerEnter(Collider other)
+   
+    public void SetBallToPlayer(CharBallController player)
     {
-        CharBallController charBallController = other.GetComponent<CharBallController>();
-        if (charBallController)
+        // si la bola no esta poseida por ningun jugador == null
+        if (!transform.parent)
         {
-            // si la bola no esta poseida por ningun jugador == null
-            if (!transform.parent)
-            {
 
-                rb.Sleep(); // desactiva el rigibody
-                rb.useGravity = !rb.IsSleeping(); // desactiva la gravedad
-                ballCollider.enabled = !rb.IsSleeping(); // desactiva el collider para evitar choques con el jugador
-                charBallController.SetBallInPossesion(transform);
-            }
+            rb.Sleep(); // desactiva el rigibody
+            rb.useGravity = !rb.IsSleeping(); // desactiva la gravedad
+            ballCollider.enabled = !rb.IsSleeping(); // desactiva el collider para evitar choques con el jugador
+            player.SetBallInPossesion(transform);
         }
     }
 
@@ -40,7 +36,6 @@ public class BallScrpt : MonoBehaviour
 
     public void ThrowBall(Transform trhowPos, float force)
     {
-        Debug.Log(rb.IsSleeping());
         transform.position = trhowPos.position;
         WakeUpAllComponents();
         rb.AddForce(trhowPos.forward * force, ForceMode.Impulse);

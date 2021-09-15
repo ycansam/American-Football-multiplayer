@@ -18,12 +18,12 @@ public class ThrowBall : MonoBehaviour
         }
         return true;
     }
-    public void Throw(Transform ball)
+    public void Throw(Transform ball, float playerSpeed)
     {
         if (ball)
         {
             BallScrpt ballScrpt = ball.GetComponent<BallScrpt>();
-            float throwValue = (charging / maxCharge) * force;
+            float throwValue = (charging / maxCharge) * (force + playerSpeed);
         
             //lanzando la bola en un sitio, rotacion y fuerza.
             ballScrpt.ThrowBall(trhowBallPosition, throwValue);
