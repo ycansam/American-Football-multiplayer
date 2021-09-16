@@ -830,7 +830,7 @@ MonoBehaviour:
   playerShield: {fileID: 907820368}
   speed: 10
   speedWithBall: 8.5
-  speedWithBallAimingFactor: 0.5
+  speedWithBallAimingFactor: 0.2
   sprintFactor: 1.5
   transitionSprintSeconds: 2.5
   jumpForceMin: 5
@@ -927,8 +927,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trhowBallPosition: {fileID: 1879892987}
-  force: 30
-  maxCharge: 1.5
+  minForce: 5
+  force: 40
+  chargeTime: 1.5
 --- !u!1 &1755215786
 GameObject:
   m_ObjectHideFlags: 0

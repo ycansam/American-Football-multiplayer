@@ -26,6 +26,7 @@ public class CharController : MonoBehaviour
     [SerializeField] private float transitionJumpInSeconds = 2f;
     float timerJumping = 0;
     float finalJumpForce;
+    bool jumped = false; 
     [Header("Variables")]
     private bool grounded = false;
     private bool aiming = false;
@@ -85,9 +86,9 @@ public class CharController : MonoBehaviour
             else
             {
                 // cambia la velocidad si esta aimeando y solo si esta en el suelo
-                if (!aiming && grounded || !grounded)
+                if (!aiming )
                     PlayerMove(speedWithBall); // corre con la bola
-                else if (grounded)
+                else if (aiming && !jumped)
                     PlayerMove(speedWithBall * speedWithBallAimingFactor); // corre con la bola
             }
             ResetTimersSprint();
@@ -243,6 +244,7 @@ public class CharController : MonoBehaviour
         if (grounded)
         {
             verticalSpeed = -gravity * Time.fixedDeltaTime;
+            jumped = false;
             JumpTransition();
         }
         else
@@ -264,7 +266,7 @@ public class CharController : MonoBehaviour
                 finalJumpForce = jumpForceMin + (timerJumping / transitionJumpInSeconds) * (jumpForceMax - jumpForceMin);
             }
         }
-        else
+        else if(!jumped && timerJumping > 0.2f)
         {
             Jump(finalJumpForce);
             timerJumping = 0;
@@ -274,6 +276,7 @@ public class CharController : MonoBehaviour
     private void Jump(float force)
     {
         verticalSpeed = force;
+        jumped = true;
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
