@@ -26,10 +26,10 @@ public class CharController : MonoBehaviour
     [SerializeField] private float transitionJumpInSeconds = 2f;
     float timerJumping = 0;
     float finalJumpForce;
-    bool jumped = false; 
     [Header("Variables")]
     private bool grounded = false;
     private bool aiming = false;
+    private bool punching = false;
     bool hasBall;                   // si el jugador tiene la bola o no
 
     private float vertical_axis;
@@ -86,9 +86,9 @@ public class CharController : MonoBehaviour
             else
             {
                 // cambia la velocidad si esta aimeando y solo si esta en el suelo
-                if (!aiming )
+                if (!aiming)
                     PlayerMove(speedWithBall); // corre con la bola
-                else if (aiming && !jumped)
+                else if (aiming && !grounded)
                     PlayerMove(speedWithBall * speedWithBallAimingFactor); // corre con la bola
             }
             ResetTimersSprint();
@@ -98,11 +98,11 @@ public class CharController : MonoBehaviour
             Sprint();
         }
 
+        PlayerGravity();
     }
 
     private void FixedUpdate()
     {
-        PlayerGravity();
     }
 
     /// <summary ="GetInput()">
@@ -118,6 +118,7 @@ public class CharController : MonoBehaviour
 
         aiming = CamController.Aiming;
         hasBall = charBallController.ballInPossesion; // control sobre la bola. Si exite true, else not
+        punching = Input.GetButton(GameConstants.BUTTON_FIRE1);
 
         // reseteo el sprint si el jugador va a izquierda o derecha
         if (Input.GetAxis(GameConstants.HORIZONTAL) > 0.2f
@@ -160,11 +161,14 @@ public class CharController : MonoBehaviour
                 playerShield.CloseShield();
             return;
         }
-
+        // abriendo el escudo para golpear
         if (playerShield && aiming && !hasBall && !playerShield.GetOpenShield())
         {
             playerShield.OpenShield();
-        }
+            if(punching){
+                
+            }
+        }// cerrando escudo
         else if (playerShield && !aiming && !hasBall && playerShield.GetOpenShield())
         {
             playerShield.CloseShield();
@@ -243,18 +247,21 @@ public class CharController : MonoBehaviour
     {
         if (grounded)
         {
-            verticalSpeed = -gravity * Time.fixedDeltaTime;
-            jumped = false;
-            JumpTransition();
+            verticalSpeed = -gravity * Time.deltaTime;
+            if (Input.GetKey(GameConstants.KEY_JUMP))
+                Jump(jumpForceMin);
+            // JumpTransition(); por si quiero hacer un salto propulsado
         }
         else
         {
-            verticalSpeed -= gravity * Time.fixedDeltaTime;
+            verticalSpeed -= gravity * Time.deltaTime;
         }
-        characterController.Move((transform.up * verticalSpeed) * Time.fixedDeltaTime);
+        // JetPack(); // por si en vez de un salto quiero hacer un jetpack
+        characterController.Move((transform.up * verticalSpeed) * Time.deltaTime);
         grounded = characterController.isGrounded;
     }
-    
+
+    // not implemented
     private void JumpTransition()
     {
         bool jumping = Input.GetKey(GameConstants.KEY_JUMP);
@@ -266,17 +273,24 @@ public class CharController : MonoBehaviour
                 finalJumpForce = jumpForceMin + (timerJumping / transitionJumpInSeconds) * (jumpForceMax - jumpForceMin);
             }
         }
-        else if(!jumped && timerJumping > 0.2f)
+        else if (timerJumping > 0.01f)
         {
             Jump(finalJumpForce);
             timerJumping = 0;
             finalJumpForce = 0;
         }
     }
+    // not implemented
+    private void JetPack()
+    {
+        bool flying = Input.GetKey(GameConstants.KEY_JUMP);
+        if (flying)
+            verticalSpeed = jumpForceMin;
+    }
+
     private void Jump(float force)
     {
         verticalSpeed = force;
-        jumped = true;
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)

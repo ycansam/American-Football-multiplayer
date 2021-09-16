@@ -31,6 +31,9 @@ public class CharIKAnimator : MonoBehaviour
             SetWeightSprint(CharController.SprintWeight);
 
             SetAnimationDirectionRunning(Input.GetAxisRaw(GameConstants.HORIZONTAL), Input.GetAxisRaw(GameConstants.VERTICAL));
+
+            animator.SetIKPosition(AvatarIKGoal.RightHand, bodyLookingGameobject.position);
+            animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
         }
     }
 

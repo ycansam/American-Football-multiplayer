@@ -40,4 +40,5 @@ public static class GameConstants
     public const string  ANIMATOR_LAYER_SPRINT = "Sprinting";
     public const string  ANIMATOR_LAYER_HORIZONTAL = "Horizontal";
     public const string  ANIMATOR_LAYER_AIMING = "Aiming";
+    public const string  ANIMATOR_LAYER_PUNCH = "Punch";
 }
