@@ -15,11 +15,12 @@ public class CharController : MonoBehaviour
     private ThrowBall throwBallController;
 
     [Header("Move Settings")]
-    [SerializeField] private float speed;
-    [SerializeField] private float speedWithBall;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float sprintFactor;
-    [SerializeField] float transitionSprintSeconds;
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private float speedWithBall = 8.5f;
+    [SerializeField] private float speedWithBallAimingFactor = 0.7f;
+    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float sprintFactor = 1.5f;
+    [SerializeField] float transitionSprintSeconds = 2.5f;
     [Header("Variables")]
     private bool grounded = false;
     private bool aiming = false;
@@ -62,16 +63,22 @@ public class CharController : MonoBehaviour
     {
         GetInput();
 
-        PlayerWithBallActions();
         PlayerShield();
+        PlayerWithBallActions();
 
         if (!sprinting)
         {
             if (!hasBall)
+            {
                 PlayerMove(speed); // corre normal
+            }
             else
-                PlayerMove(speedWithBall); // corre con la bola
-
+            {
+                if (!aiming)
+                    PlayerMove(speedWithBall); // corre con la bola
+                else
+                    PlayerMove(speedWithBall*speedWithBallAimingFactor); // corre con la bola
+            }
             ResetTimersSprint();
         }
         else
@@ -131,12 +138,24 @@ public class CharController : MonoBehaviour
         }
     }
 
+    /// <summary name="PlayerShield()">
+    /// Acciones cuando el jugador activa el escudo
+    /// </summary>
     private void PlayerShield()
     {
+        if (sprinting)
+        {
+            if (playerShield.GetOpenShield())
+                playerShield.CloseShield();
+            return;
+        }
+
         if (playerShield && aiming && !hasBall && !playerShield.GetOpenShield())
         {
             playerShield.OpenShield();
-        }else if(playerShield && !aiming && !hasBall && playerShield.GetOpenShield()){
+        }
+        else if (playerShield && !aiming && !hasBall && playerShield.GetOpenShield())
+        {
             playerShield.CloseShield();
         }
     }
