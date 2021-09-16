@@ -831,9 +831,11 @@ MonoBehaviour:
   speed: 10
   speedWithBall: 8.5
   speedWithBallAimingFactor: 0.5
-  jumpForce: 5
   sprintFactor: 1.5
   transitionSprintSeconds: 2.5
+  jumpForceMin: 5
+  jumpForceMax: 15
+  transitionJumpInSeconds: 2
 --- !u!143 &1146795049
 CharacterController:
   m_ObjectHideFlags: 0

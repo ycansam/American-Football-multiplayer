@@ -18,9 +18,14 @@ public class CharController : MonoBehaviour
     [SerializeField] private float speed = 10f;
     [SerializeField] private float speedWithBall = 8.5f;
     [SerializeField] private float speedWithBallAimingFactor = 0.7f;
-    [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float sprintFactor = 1.5f;
     [SerializeField] float transitionSprintSeconds = 2.5f;
+    [Header("Jump Settings")]
+    [SerializeField] private float jumpForceMin = 5f;
+    [SerializeField] private float jumpForceMax = 15f;
+    [SerializeField] private float transitionJumpInSeconds = 2f;
+    float timerJumping = 0;
+    float finalJumpForce;
     [Header("Variables")]
     private bool grounded = false;
     private bool aiming = false;
@@ -33,7 +38,7 @@ public class CharController : MonoBehaviour
     private float verticalSpeed;
 
     bool sprinting = false;
-    float timer = 0;
+    float timer = 0; // timer para el sprint
     float sprintValue;
 
     /// <EstaticosParaOtrasClases>
@@ -47,7 +52,7 @@ public class CharController : MonoBehaviour
         get => sprintWeight;
     }
     private static float sprintWeight;
-
+    bool startedCharge = false; // charge to throw the ball
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -57,6 +62,11 @@ public class CharController : MonoBehaviour
 
         // pasando los valores del multiplicador a las animaciones
         CharAnimations.sprintFactor = sprintFactor;
+    }
+    private void OnGUI()
+    {
+        GUILayout.Label("Speed: " + CharController.actualSpeed);
+        GUILayout.Label("JumpForce: " + finalJumpForce);
     }
 
     void Update()
@@ -74,10 +84,11 @@ public class CharController : MonoBehaviour
             }
             else
             {
-                if (!aiming)
+                // cambia la velocidad si esta aimeando y solo si esta en el suelo
+                if (!aiming && grounded || !grounded)
                     PlayerMove(speedWithBall); // corre con la bola
-                else
-                    PlayerMove(speedWithBall*speedWithBallAimingFactor); // corre con la bola
+                else if (grounded)
+                    PlayerMove(speedWithBall * speedWithBallAimingFactor); // corre con la bola
             }
             ResetTimersSprint();
         }
@@ -120,7 +131,6 @@ public class CharController : MonoBehaviour
     /// <summary name="PlayerWithBallActions()">
     /// Acciones cuando tiene la bola
     /// </summary>
-    bool startedCharge = false;
     private void PlayerWithBallActions()
     {
         bool throwing = Input.GetButton(GameConstants.BUTTON_FIRE1);
@@ -233,10 +243,7 @@ public class CharController : MonoBehaviour
         if (grounded)
         {
             verticalSpeed = -gravity * Time.fixedDeltaTime;
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                verticalSpeed = jumpForce;
-            }
+            JumpTransition();
         }
         else
         {
@@ -245,7 +252,29 @@ public class CharController : MonoBehaviour
         characterController.Move((transform.up * verticalSpeed) * Time.fixedDeltaTime);
         grounded = characterController.isGrounded;
     }
-
+    
+    private void JumpTransition()
+    {
+        bool jumping = Input.GetKey(GameConstants.KEY_JUMP);
+        if (jumping)
+        {
+            if (timerJumping < transitionJumpInSeconds)
+            {
+                timerJumping += Time.deltaTime;
+                finalJumpForce = jumpForceMin + (timerJumping / transitionJumpInSeconds) * (jumpForceMax - jumpForceMin);
+            }
+        }
+        else
+        {
+            Jump(finalJumpForce);
+            timerJumping = 0;
+            finalJumpForce = 0;
+        }
+    }
+    private void Jump(float force)
+    {
+        verticalSpeed = force;
+    }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
