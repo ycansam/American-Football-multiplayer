@@ -7,6 +7,8 @@ public class CamController : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private CinemachineVirtualCamera cinemachineBase;
+    private CharController charController;
+    private CharRagdoll charRagdoll;
     [Header("Camera Settings")]
     [SerializeField] private float fieldOfViewOnAim;
     [SerializeField] private float camSensitivity;
@@ -23,11 +25,20 @@ public class CamController : MonoBehaviour
         set => aiming = value;
     }
     private static bool aiming = false;
+    private void Start()
+    {
+        charController = GetComponent<CharController>();
+        charRagdoll = GetComponentInChildren<CharRagdoll>();
+    }
     void Update()
     {
-        GetMouseInput();
-        Aim();
-        CameraMove();
+        if (charController.isLocalClient)
+        {
+            GetMouseInput();
+            Aim();
+            CameraMove();
+        }
+
     }
     private void GetMouseInput()
     {
@@ -76,18 +87,18 @@ public class CamController : MonoBehaviour
 
         nextRotation = Quaternion.Lerp(neck.transform.rotation, nextRotation, Time.deltaTime * camSensitivity);
         // libera la vista si no esta apuntando
-        if (Input.GetKeyUp(GameConstants.KEY_FREE_VISION) )
+        if (Input.GetKeyUp(GameConstants.KEY_FREE_VISION))
         {
             neck.transform.rotation = transform.rotation;
         }
         //Set the player rotation based on the look transform
-        if (!Input.GetKey(GameConstants.KEY_FREE_VISION))
+        if (!Input.GetKey(GameConstants.KEY_FREE_VISION) || !charRagdoll.isOnRagdoll)
         {
             transform.rotation = Quaternion.Euler(0, neck.transform.rotation.eulerAngles.y, 0);
             //reset the y rotation of the look transform
             neck.transform.localEulerAngles = new Vector3(angles.x, 0, angles.z);
         }
-        
+
 
     }
 }

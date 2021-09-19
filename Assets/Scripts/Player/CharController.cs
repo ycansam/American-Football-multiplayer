@@ -44,9 +44,9 @@ public class CharController : MonoBehaviour
     float sprintValue;
 
     /// <EstaticosParaOtrasClases>
-    public static float ActualSpeed
+    public float ActualSpeed
     { get => actualSpeed; }
-    private static float actualSpeed;
+    private float actualSpeed;
 
     // weight que indica la cantidad de animacion se aplica cuando se sprinta (de 0 a 1)
     public static float SprintWeight
@@ -55,6 +55,10 @@ public class CharController : MonoBehaviour
     }
     private static float sprintWeight;
     bool startedCharge = false; // charge to throw the ball
+
+    [Header("Multiplayer Settings")]
+    public bool isLocalClient = false;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -67,45 +71,43 @@ public class CharController : MonoBehaviour
     }
     private void OnGUI()
     {
-        GUILayout.Label("Speed: " + CharController.actualSpeed);
+        GUILayout.Label("Speed: " + actualSpeed);
         GUILayout.Label("JumpForce: " + finalJumpForce);
     }
 
     void Update()
     {
-        GetInput();
-
-        PlayerShield();
-        PlayerWithBallActions();
-
-        if (!sprinting)
+        if (isLocalClient)
         {
-            if (!hasBall)
+            GetInput();
+
+            PlayerShield();
+            PlayerWithBallActions();
+
+            if (!sprinting)
             {
-                PlayerMove(speed); // corre normal
+                if (!hasBall)
+                {
+                    PlayerMove(speed); // corre normal
+                }
+                else
+                {
+                    // cambia la velocidad si esta aimeando y solo si esta en el suelo
+                    if (!aiming)
+                        PlayerMove(speedWithBall); // corre con la bola
+                    else if (aiming && !grounded)
+                        PlayerMove(speedWithBall * speedWithBallAimingFactor); // corre con la bola
+                }
+                ResetTimersSprint();
             }
             else
             {
-                // cambia la velocidad si esta aimeando y solo si esta en el suelo
-                if (!aiming)
-                    PlayerMove(speedWithBall); // corre con la bola
-                else if (aiming && !grounded)
-                    PlayerMove(speedWithBall * speedWithBallAimingFactor); // corre con la bola
+                Sprint();
             }
-            ResetTimersSprint();
-        }
-        else
-        {
-            Sprint();
+            PlayerGravity();
         }
 
-        PlayerGravity();
     }
-
-    private void FixedUpdate()
-    {
-    }
-
     /// <summary ="GetInput()">
     /// Obtiene los inputs
     /// </summary>
@@ -146,7 +148,7 @@ public class CharController : MonoBehaviour
         {
             // cuando se suelta el boton se dispara la bola y la libera
             startedCharge = false;
-            throwBallController.Throw(charBallController.ballInPossesion, CharController.ActualSpeed);
+            throwBallController.Throw(charBallController.ballInPossesion, ActualSpeed);
             charBallController.RemoveParentFromBall();
         }
     }
@@ -166,8 +168,9 @@ public class CharController : MonoBehaviour
         if (playerShield && aiming && !hasBall && !playerShield.GetOpenShield())
         {
             playerShield.OpenShield();
-            if(punching){
-                
+            if (punching)
+            {
+
             }
         }// cerrando escudo
         else if (playerShield && !aiming && !hasBall && playerShield.GetOpenShield())
@@ -184,7 +187,7 @@ public class CharController : MonoBehaviour
     {
         Vector3 move = (transform.forward * vertical_axis * speed) + (transform.right * horizontal_axis * speed);
         Vector3 clampedMove = Vector3.ClampMagnitude(move, speed); // definiendo la magnitud maxima para la velocidad del personaje
-        CharController.actualSpeed = clampedMove.magnitude; // setting la variable para poder usarse publicamente en animations
+        actualSpeed = clampedMove.magnitude; // setting la variable para poder usarse publicamente en animations
 
         characterController.Move(clampedMove * Time.deltaTime);
     }
@@ -211,7 +214,7 @@ public class CharController : MonoBehaviour
             TimerSprint();
             Vector3 move = (transform.forward * vertical_axis * speed * sprintValue);
             Vector3 clampedMove = Vector3.ClampMagnitude(move, speed * sprintValue); // definiendo la magnitud maxima para la velocidad del personaje
-            CharController.actualSpeed = clampedMove.magnitude; // setting la variable para poder usarse publicamente en animations
+            actualSpeed = clampedMove.magnitude; // setting la variable para poder usarse publicamente en animations
 
             characterController.Move(clampedMove * Time.deltaTime);
         }
@@ -251,7 +254,8 @@ public class CharController : MonoBehaviour
             verticalSpeed = -gravity * Time.deltaTime;
             jumped = false;
 
-            if (Input.GetKey(GameConstants.KEY_JUMP)){
+            if (Input.GetKey(GameConstants.KEY_JUMP))
+            {
                 Jump(jumpForceMin);
                 jumped = true;
             }
@@ -265,7 +269,8 @@ public class CharController : MonoBehaviour
         characterController.Move((transform.up * verticalSpeed) * Time.deltaTime);
         grounded = characterController.isGrounded;
     }
-    public bool GetPlayerJumped(){
+    public bool GetPlayerJumped()
+    {
         return jumped;
     }
 
@@ -305,7 +310,7 @@ public class CharController : MonoBehaviour
     {
         Rigidbody body = hit.collider.attachedRigidbody;
 
-        if (body)
+        if (body && hit.transform.tag == GameConstants.TAG_BALON)
         {
             BallScrpt ball = body.GetComponent<BallScrpt>();
             CheckColliderByHit(hit, body, ball.transform);
@@ -329,6 +334,17 @@ public class CharController : MonoBehaviour
         // then you can also multiply the push velocity by that.
 
         // Apply the push
-        body.AddForce(pushDir * CharController.ActualSpeed, ForceMode.Impulse);
+        body.AddForce(pushDir * ActualSpeed, ForceMode.Impulse);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.tag == GameConstants.TAG_PLAYER && other.name != transform.name)
+        {
+            if (ActualSpeed > (speed*sprintFactor) -1f)
+            {
+                other.transform.GetComponentInChildren<CharRagdoll>().DoRagdoll(true);
+            }
+        }
     }
 }

@@ -5,35 +5,44 @@ using UnityEngine;
 public class CharIKAnimator : MonoBehaviour
 {
     private Animator animator;
+    CharController charController;
     [SerializeField] Transform bodyLookingGameobject = null;
     [SerializeField] bool ikActive = false;
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        charController = GetComponentInParent<CharController>();
     }
     private void OnAnimatorIK(int layerIndex)
     {
-        if (animator)
+        if (charController != null)
         {
-            // si esta activado el cuerpo cabeza etc seguira mirando a un objetivo
-            if (ikActive)
+            if (charController.isLocalClient)
             {
-                if (bodyLookingGameobject != null)
+                if (animator)
                 {
-                    SettingWeights();
+                    // si esta activado el cuerpo cabeza etc seguira mirando a un objetivo
+                    if (ikActive)
+                    {
+                        if (bodyLookingGameobject != null)
+                        {
+                            SettingWeights();
+                        }
+                    }
+                    else
+                    {
+                        // si esta desactivado no mirara nada.
+                        animator.SetLookAtWeight(0, 0);
+                    }
+                    SetWeightSprint(CharController.SprintWeight);
+
+                    SetAnimationDirectionRunning(Input.GetAxisRaw(GameConstants.HORIZONTAL), Input.GetAxisRaw(GameConstants.VERTICAL));
+
+                    animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
                 }
             }
-            else
-            {
-                // si esta desactivado no mirara nada.
-                animator.SetLookAtWeight(0, 0);
-            }
-            SetWeightSprint(CharController.SprintWeight);
-
-            SetAnimationDirectionRunning(Input.GetAxisRaw(GameConstants.HORIZONTAL), Input.GetAxisRaw(GameConstants.VERTICAL));
-
-            animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
         }
+
     }
 
     /// <summary ="SettingWeights()">

@@ -26,17 +26,19 @@ public class CharAnimations : MonoBehaviour
 
     private void Update()
     {
-        RunAnimation(Input.GetAxis(GameConstants.HORIZONTAL), Input.GetAxis(GameConstants.VERTICAL));
-        AimAnimation();
-        PunchAnimation();
+        if (charController.isLocalClient)
+        {
+            RunAnimation(Input.GetAxis(GameConstants.HORIZONTAL), Input.GetAxis(GameConstants.VERTICAL));
+            AimAnimation();
+            PunchAnimation();
 
-        JumpAnimation();
-
+            JumpAnimation();
+        }
     }
 
     private void RunAnimation(float horizontal, float vertical)
     {
-        animator.SetFloat(GameConstants.ANIMATOR_PARAMETER_SPEED, CharController.ActualSpeed);
+        animator.SetFloat(GameConstants.ANIMATOR_PARAMETER_SPEED, charController.ActualSpeed);
         animator.SetFloat(GameConstants.ANIMATOR_PARAMETER_VERTICAL, vertical);
         animator.SetFloat(GameConstants.ANIMATOR_PARAMETER_HORIZONTAL, horizontal);
     }
@@ -88,8 +90,6 @@ public class CharAnimations : MonoBehaviour
 
     private void TransitionJumpDown()
     {
-        Debug.Log(timerJump);
-
         if (timerJump >= 0f)
         {
             timerJump -= Time.deltaTime;

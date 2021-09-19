@@ -29,6 +29,7 @@ public static class GameConstants
     [Header("TAGS")]
     public const string TAG_SUELO = "Suelo";
     public const string TAG_BALON = "Balon";
+    public const string TAG_PLAYER = "Player";
 
     [Header("Animations Parameters")]
     public const string  ANIMATOR_PARAMETER_HORIZONTAL = "HORIZONTAL";

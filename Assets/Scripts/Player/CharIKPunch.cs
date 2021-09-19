@@ -6,6 +6,7 @@ public class CharIKPunch : MonoBehaviour
 {
     // Start is called before the first frame updateprivate Animator animator;
     private Animator animator;
+    CharController charController;
     [SerializeField] Transform bodyLookingGameobject = null;
     [SerializeField] bool ikActive = false;
     [SerializeField] [Range(0, 1f)] float rightHandWeight = 0;
@@ -20,54 +21,59 @@ public class CharIKPunch : MonoBehaviour
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        charController = GetComponentInParent<CharController>();
     }
     private void OnAnimatorIK(int layerIndex)
     {
-        if (animator)
+        if (charController.isLocalClient)
         {
-            // si esta activado el cuerpo cabeza etc seguira mirando a un objetivo
-            if (ikActive)
+            if (animator)
             {
-                if (bodyLookingGameobject != null)
+                // si esta activado el cuerpo cabeza etc seguira mirando a un objetivo
+                if (ikActive)
                 {
-                    m_CurrentClipInfo = animator.GetCurrentAnimatorClipInfo(animator.GetLayerIndex(GameConstants.ANIMATOR_LAYER_PUNCH));
-                    if (Input.GetButtonDown(GameConstants.BUTTON_FIRE1) && m_CurrentClipInfo.Length == 0)
+                    if (bodyLookingGameobject != null)
                     {
-                        mode = RigAnimMode.inc;
-                    }
+                        m_CurrentClipInfo = animator.GetCurrentAnimatorClipInfo(animator.GetLayerIndex(GameConstants.ANIMATOR_LAYER_PUNCH));
+                        if (Input.GetButtonDown(GameConstants.BUTTON_FIRE1) && m_CurrentClipInfo.Length == 0)
+                        {
+                            mode = RigAnimMode.inc;
+                        }
 
-                    switch (mode)
-                    {
-                        case RigAnimMode.inc:
-                            rightHandWeight = Mathf.Lerp(rightHandWeight, 1, 6 * Time.deltaTime);
-                            if (rightHandWeight > 0.95f)
-                            {
-                                rightHandWeight = 1;
-                                animator.SetIKPositionWeight(AvatarIKGoal.RightHand, rightHandWeight);
-                                mode = RigAnimMode.dec;
-                            }
-                            break;
-                        case RigAnimMode.dec:
-                            rightHandWeight = Mathf.Lerp(rightHandWeight, 0, 10f * Time.deltaTime);
-                            if (rightHandWeight < 0.1f)
-                            {
-                                rightHandWeight = 0;
-                                animator.SetIKPositionWeight(AvatarIKGoal.RightHand, rightHandWeight);
-                                mode = RigAnimMode.off;
-                            }
-                            break;
+                        switch (mode)
+                        {
+                            case RigAnimMode.inc:
+                                rightHandWeight = Mathf.Lerp(rightHandWeight, 1, 6 * Time.deltaTime);
+                                if (rightHandWeight > 0.95f)
+                                {
+                                    rightHandWeight = 1;
+                                    animator.SetIKPositionWeight(AvatarIKGoal.RightHand, rightHandWeight);
+                                    mode = RigAnimMode.dec;
+                                }
+                                break;
+                            case RigAnimMode.dec:
+                                rightHandWeight = Mathf.Lerp(rightHandWeight, 0, 10f * Time.deltaTime);
+                                if (rightHandWeight < 0.1f)
+                                {
+                                    rightHandWeight = 0;
+                                    animator.SetIKPositionWeight(AvatarIKGoal.RightHand, rightHandWeight);
+                                    mode = RigAnimMode.off;
+                                }
+                                break;
+                        }
+                        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, rightHandWeight);
                     }
-                    animator.SetIKPositionWeight(AvatarIKGoal.RightHand, rightHandWeight);
                 }
-            }
-            else
-            {
-                // si esta desactivado no mirara nada.
-                animator.SetLookAtWeight(0, 0);
-            }
-            animator.SetIKPosition(AvatarIKGoal.RightHand, bodyLookingGameobject.position);
+                else
+                {
+                    // si esta desactivado no mirara nada.
+                    animator.SetLookAtWeight(0, 0);
+                }
+                animator.SetIKPosition(AvatarIKGoal.RightHand, bodyLookingGameobject.position);
 
+            }
         }
+
     }
     private void FixedUpdate()
     {
