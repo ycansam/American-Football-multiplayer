@@ -21,6 +21,7 @@ public class Shield : MonoBehaviour
     {
         CheckShieldOpenClosed();
     }
+    
     private void CheckShieldOpenClosed()
     {
         // abriendo shield

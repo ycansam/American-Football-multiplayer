@@ -28,6 +28,7 @@ public class CharController : MonoBehaviour
     float finalJumpForce;
     [Header("Variables")]
     private bool grounded = false;
+    private bool jumped = false;
     private bool aiming = false;
     private bool punching = false;
     bool hasBall;                   // si el jugador tiene la bola o no
@@ -248,8 +249,12 @@ public class CharController : MonoBehaviour
         if (grounded)
         {
             verticalSpeed = -gravity * Time.deltaTime;
-            if (Input.GetKey(GameConstants.KEY_JUMP))
+            jumped = false;
+
+            if (Input.GetKey(GameConstants.KEY_JUMP)){
                 Jump(jumpForceMin);
+                jumped = true;
+            }
             // JumpTransition(); por si quiero hacer un salto propulsado
         }
         else
@@ -260,11 +265,14 @@ public class CharController : MonoBehaviour
         characterController.Move((transform.up * verticalSpeed) * Time.deltaTime);
         grounded = characterController.isGrounded;
     }
+    public bool GetPlayerJumped(){
+        return jumped;
+    }
 
     // not implemented
     private void JumpTransition()
     {
-        bool jumping = Input.GetKey(GameConstants.KEY_JUMP);
+        bool jumping = Input.GetKeyDown(GameConstants.KEY_JUMP);
         if (jumping)
         {
             if (timerJumping < transitionJumpInSeconds)

@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: ca050d1fe8ee0c14699245f7fccc9224
+guid: fa831f53542842a4fa90abcc371909d0
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: PunchingLeft
+    second: Jump Loop
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,14 +35,14 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: PunchingLeft
+      name: Jump Loop
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 15
-      lastFrame: 62
+      firstFrame: 0
+      lastFrame: 60
       wrapMode: 0
-      orientationOffsetY: 20
-      level: 0
+      orientationOffsetY: -10
+      level: -0.2
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0

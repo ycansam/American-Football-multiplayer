@@ -65,6 +65,7 @@ public class CharIKPunch : MonoBehaviour
                 // si esta desactivado no mirara nada.
                 animator.SetLookAtWeight(0, 0);
             }
+            animator.SetIKPosition(AvatarIKGoal.RightHand, bodyLookingGameobject.position);
 
         }
     }
