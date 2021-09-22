@@ -960,5 +960,9 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9080665770436176522, guid: ed3686d7d4f5d7040a6ab16898c8defa, type: 3}
+      propertyPath: isLocalPlayer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed3686d7d4f5d7040a6ab16898c8defa, type: 3}

@@ -351,21 +351,21 @@ public class CharController : MonoBehaviour
             CharRagdoll charRagdoll = other.transform.GetComponentInChildren<CharRagdoll>();
             CharBallController enemyBallController = other.GetComponent<CharBallController>();
 
-            if (ActualSpeed > 1f && !charRagdoll.isOnRagdoll)
-            {
-                charRagdoll.DoRagdoll(true);
-                charRagdoll.AddImpact(this.transform.forward + this.transform.up, 15f);
+            // if (ActualSpeed > 1f && !charRagdoll.isOnRagdoll)
+            // {
+            //     charRagdoll.DoRagdoll(true);
+            //     charRagdoll.AddImpact(this.transform.forward + this.transform.up, 15f);
 
-                // si posee la bola
-                if (enemyBallController.ballInPossesion)
-                {
-                    ThrowBall enemyTrhowBall = other.GetComponent<ThrowBall>();
+            //     // si posee la bola
+            //     if (enemyBallController.ballInPossesion)
+            //     {
+            //         ThrowBall enemyTrhowBall = other.GetComponent<ThrowBall>();
                     
-                    // enemyBallController.ballInPossesion.GetComponent<BallScrpt>().WakeUpAllComponents();
-                    enemyTrhowBall.Throw(enemyTrhowBall.onRagdollTrhowPosition, enemyBallController.ballInPossesion, 25f, enemyTrhowBall.onRagdollTrhowPosition.up );
-                    enemyBallController.RemoveParentFromBall();
-                }
-            }
+            //         // enemyBallController.ballInPossesion.GetComponent<BallScrpt>().WakeUpAllComponents();
+            //         enemyTrhowBall.Throw(enemyTrhowBall.onRagdollTrhowPosition, enemyBallController.ballInPossesion, 25f, enemyTrhowBall.onRagdollTrhowPosition.up );
+            //         enemyBallController.RemoveParentFromBall();
+            //     }
+            // }
         }
     }
 }

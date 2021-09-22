@@ -39,19 +39,7 @@ public class CharBallController : MonoBehaviour
             ballInPossesion.SetParent(playerHand);
         }
     }
-
-    // funcion para liberar la bola de la posesion del jugador
-    public void SetBallFreeOutOfPosesion()
-    {
-        // auxiliar para evitar errores con los colliders
-        if (ballInPossesion)
-        {
-            // si no ha sido lanzada con carga no se mueve a esa
-            ballInPossesion.GetComponent<BallScrpt>().WakeUpAllComponents(); // vuelve a activar los componentes
-            ballInPossesion.position = ballLiberationPos.position;
-            RemoveParentFromBall();
-        }
-    }
+    
     public void RemoveParentFromBall()
     {
         ballInPossesion.SetParent(null); // desactiva del parent

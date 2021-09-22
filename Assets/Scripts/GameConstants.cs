@@ -22,6 +22,7 @@ public static class GameConstants
     public const KeyCode KEY_DOWNWARDS = KeyCode.S;
     public const KeyCode KEY_SPRINT = KeyCode.LeftShift;
     public const KeyCode KEY_JUMP = KeyCode.Space;
+    public const KeyCode KEY_COLLECT = KeyCode.E;
     public const string BUTTON_FIRE1 = "Fire1";
     public const string BUTTON_FIRE2 = "Fire2";
     [Header("Layers")]
