@@ -67,7 +67,7 @@ Transform:
   - {fileID: 1218129902262720514}
   - {fileID: 8424313131968796695}
   m_Father: {fileID: 918080771372864087}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6761935150761391549
 Animator:
@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllColliders: []
+  hips: {fileID: 815139750473738446}
   isOnRagdoll: 0
 --- !u!1 &106919866656091692
 GameObject:
@@ -799,7 +800,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 918080770325661384}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -7.476431e-17, w: 1}
   m_LocalPosition: {x: 0, y: 1.505, z: -0.049}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -807,7 +808,7 @@ Transform:
   - {fileID: 918080771034285451}
   - {fileID: 918080769798408162}
   m_Father: {fileID: 918080771372864087}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &918080770529435781
 GameObject:
@@ -903,8 +904,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 918080770325661385}
   - {fileID: 808137636112887751}
+  - {fileID: 918080770325661385}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

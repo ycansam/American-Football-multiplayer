@@ -84,15 +84,17 @@ public class CamController : MonoBehaviour
         neck.transform.localEulerAngles = angles;
         #endregion
 
-
+        
         nextRotation = Quaternion.Lerp(neck.transform.rotation, nextRotation, Time.deltaTime * camSensitivity);
+
+        
         // libera la vista si no esta apuntando
         if (Input.GetKeyUp(GameConstants.KEY_FREE_VISION))
         {
             neck.transform.rotation = transform.rotation;
         }
         //Set the player rotation based on the look transform
-        if (!Input.GetKey(GameConstants.KEY_FREE_VISION) || !charRagdoll.isOnRagdoll)
+        if (!Input.GetKey(GameConstants.KEY_FREE_VISION))
         {
             transform.rotation = Quaternion.Euler(0, neck.transform.rotation.eulerAngles.y, 0);
             //reset the y rotation of the look transform

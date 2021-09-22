@@ -13,6 +13,7 @@ public class CharController : MonoBehaviour
     private CharacterController characterController;
     private CharBallController charBallController;
     private ThrowBall throwBallController;
+    private Rigidbody rb;
 
     [Header("Move Settings")]
     [SerializeField] private float speed = 10f;
@@ -31,7 +32,8 @@ public class CharController : MonoBehaviour
     private bool jumped = false;
     private bool aiming = false;
     private bool punching = false;
-    bool hasBall;                   // si el jugador tiene la bola o no
+    private bool hasBall;                   // si el jugador tiene la bola o no
+    private Vector3 charDirection;
 
     private float vertical_axis;
     private float horizontal_axis;
@@ -39,9 +41,9 @@ public class CharController : MonoBehaviour
     private float gravity;
     private float verticalSpeed;
 
-    bool sprinting = false;
-    float timer = 0; // timer para el sprint
-    float sprintValue;
+    private bool sprinting = false;
+    private float timer = 0; // timer para el sprint
+    private float sprintValue;
 
     /// <EstaticosParaOtrasClases>
     public float ActualSpeed
@@ -64,6 +66,7 @@ public class CharController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         charBallController = GetComponent<CharBallController>();
         throwBallController = GetComponent<ThrowBall>();
+        rb = GetComponent<Rigidbody>();
         gravity = GameConstants.PLAYERS_GRAVITY;
 
         // pasando los valores del multiplicador a las animaciones
@@ -77,6 +80,7 @@ public class CharController : MonoBehaviour
 
     void Update()
     {
+
         if (isLocalClient)
         {
             GetInput();
@@ -315,6 +319,10 @@ public class CharController : MonoBehaviour
             BallScrpt ball = body.GetComponent<BallScrpt>();
             CheckColliderByHit(hit, body, ball.transform);
         }
+        else
+        {
+            CheckColliderByHit(hit, body, hit.transform);
+        }
     }
     void CheckColliderByHit(ControllerColliderHit hit, Rigidbody body, Transform Object)
     {
@@ -338,12 +346,13 @@ public class CharController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.tag == GameConstants.TAG_PLAYER && other.name != transform.name)
         {
-            if (ActualSpeed > (speed*sprintFactor) -1f)
+            CharRagdoll charRagdoll = other.transform.GetComponentInChildren<CharRagdoll>();
+            if (ActualSpeed > 1f && !charRagdoll.isOnRagdoll)
             {
-                other.transform.GetComponentInChildren<CharRagdoll>().DoRagdoll(true);
+                charRagdoll.DoRagdoll(true);
+                charRagdoll.AddImpact(this.transform.forward + this.transform.up, 15f);
             }
         }
     }
