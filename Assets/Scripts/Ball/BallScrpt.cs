@@ -34,11 +34,11 @@ public class BallScrpt : MonoBehaviour
         ballCollider.enabled = !rb.IsSleeping(); // activa el collider 
     }
 
-    public void ThrowBall(Transform trhowPos, float force)
+    public void ThrowBall(Transform trhowPos, float force, Vector3 direction)
     {
         transform.position = trhowPos.position;
         WakeUpAllComponents();
-        rb.AddForce(trhowPos.forward * force, ForceMode.Impulse);
+        rb.AddForce(direction * force, ForceMode.Impulse);
     }
 
 }

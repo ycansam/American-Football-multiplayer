@@ -20,7 +20,7 @@ public class CharBallController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         BallScrpt ball = other.GetComponent<BallScrpt>();
-        if (ball)
+        if (ball && playerTrigger.enabled)
         {
             bool playerAiming = CamController.Aiming;
             if (!playerAiming)
@@ -29,7 +29,7 @@ public class CharBallController : MonoBehaviour
             }
         }
     }
-
+    
     public void SetBallInPossesion(Transform ball)
     {
         if (ball.tag == GameConstants.TAG_BALON)
@@ -52,7 +52,6 @@ public class CharBallController : MonoBehaviour
             RemoveParentFromBall();
         }
     }
-
     public void RemoveParentFromBall()
     {
         ballInPossesion.SetParent(null); // desactiva del parent

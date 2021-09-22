@@ -152,7 +152,7 @@ public class CharController : MonoBehaviour
         {
             // cuando se suelta el boton se dispara la bola y la libera
             startedCharge = false;
-            throwBallController.Throw(charBallController.ballInPossesion, ActualSpeed);
+            throwBallController.ThrowWithCharge(throwBallController.trhowBallPosition, charBallController.ballInPossesion, ActualSpeed, throwBallController.trhowBallPosition.forward);
             charBallController.RemoveParentFromBall();
         }
     }
@@ -349,10 +349,22 @@ public class CharController : MonoBehaviour
         if (other.tag == GameConstants.TAG_PLAYER && other.name != transform.name)
         {
             CharRagdoll charRagdoll = other.transform.GetComponentInChildren<CharRagdoll>();
+            CharBallController enemyBallController = other.GetComponent<CharBallController>();
+
             if (ActualSpeed > 1f && !charRagdoll.isOnRagdoll)
             {
                 charRagdoll.DoRagdoll(true);
                 charRagdoll.AddImpact(this.transform.forward + this.transform.up, 15f);
+
+                // si posee la bola
+                if (enemyBallController.ballInPossesion)
+                {
+                    ThrowBall enemyTrhowBall = other.GetComponent<ThrowBall>();
+                    
+                    // enemyBallController.ballInPossesion.GetComponent<BallScrpt>().WakeUpAllComponents();
+                    enemyTrhowBall.Throw(enemyTrhowBall.onRagdollTrhowPosition, enemyBallController.ballInPossesion, 25f, enemyTrhowBall.onRagdollTrhowPosition.up );
+                    enemyBallController.RemoveParentFromBall();
+                }
             }
         }
     }

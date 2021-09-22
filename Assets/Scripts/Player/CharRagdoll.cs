@@ -8,6 +8,7 @@ public class CharRagdoll : MonoBehaviour
     private Animator animator;
     private CharacterController characterController;
     private CharController charController;
+    private ThrowBall throwBall;
     private Collider[] AllColliders;
     private Rigidbody[] AllRigibodys;
     [SerializeField] private Transform hips;
@@ -20,6 +21,7 @@ public class CharRagdoll : MonoBehaviour
         charController = GetComponentInParent<CharController>();
         AllColliders = GetComponentsInChildren<Collider>();
         AllRigibodys = GetComponentsInChildren<Rigidbody>();
+        throwBall = GetComponentInParent<ThrowBall>();
 
         foreach (Collider col in AllColliders)
             Physics.IgnoreCollision(characterController, col);
@@ -53,7 +55,7 @@ public class CharRagdoll : MonoBehaviour
             col.enabled = isRagdoll;
         foreach (Rigidbody rb in AllRigibodys)
             rb.useGravity = isRagdoll;
-        
+
         animator.enabled = !isRagdoll;
         charController.enabled = !isRagdoll;
         isOnRagdoll = isRagdoll;
@@ -71,11 +73,16 @@ public class CharRagdoll : MonoBehaviour
 
     bool grounded;
     float verticalSpeed;
+    private bool activatedCoroutine;
     private void AddingGravity()
     {
         if (grounded)
         {
             verticalSpeed = -GameConstants.PLAYERS_GRAVITY * Time.deltaTime;
+            if (isOnRagdoll && !activatedCoroutine){
+                StartCoroutine(nameof(WakeUpPlayer));
+            }
+
         }
         else
         {
@@ -83,5 +90,12 @@ public class CharRagdoll : MonoBehaviour
         }
         characterController.Move((transform.up * verticalSpeed) * Time.deltaTime);
         grounded = characterController.isGrounded;
+    }
+    IEnumerator WakeUpPlayer(){
+        Debug.Log("activando");
+        activatedCoroutine = true;
+        yield return new WaitForSeconds(2f);
+        activatedCoroutine = false;
+        DoRagdoll(false);
     }
 }

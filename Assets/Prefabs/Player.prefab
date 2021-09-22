@@ -66,6 +66,7 @@ Transform:
   - {fileID: 815139750473738446}
   - {fileID: 1218129902262720514}
   - {fileID: 8424313131968796695}
+  - {fileID: 1723958520442494820}
   m_Father: {fileID: 918080771372864087}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -214,7 +215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3120fbba7d7fdcb49bb25973f329d28e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllColliders: []
   hips: {fileID: 815139750473738446}
   isOnRagdoll: 0
 --- !u!1 &106919866656091692
@@ -993,7 +993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHand: {fileID: 918080770529435782}
-  ballLiberationPos: {fileID: 0}
+  ballLiberationPos: {fileID: 918080771034285451}
   playerTrigger: {fileID: 918080771372864094}
   ballInPossesion: {fileID: 0}
 --- !u!114 &918080771372864095
@@ -1009,6 +1009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trhowBallPosition: {fileID: 918080771034285451}
+  onRagdollTrhowPosition: {fileID: 1723958520442494820}
   minForce: 5
   force: 40
   chargeTime: 2
@@ -1579,6 +1580,36 @@ Transform:
   - {fileID: 1080025515092786967}
   m_Father: {fileID: 18935374724031299}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2075239687474139005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1723958520442494820}
+  m_Layer: 0
+  m_Name: OnRagdollThrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1723958520442494820
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075239687474139005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 808137636112887751}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2173803043629355057
 GameObject:
