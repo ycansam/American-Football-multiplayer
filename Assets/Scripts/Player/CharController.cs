@@ -60,6 +60,7 @@ public class CharController : MonoBehaviour
 
     [Header("Multiplayer Settings")]
     public bool isLocalClient = false;
+    [HideInInspector] public bool isOnShoulder = false;
 
     void Start()
     {

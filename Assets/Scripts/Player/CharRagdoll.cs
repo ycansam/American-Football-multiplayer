@@ -27,7 +27,8 @@ public class CharRagdoll : MonoBehaviour
             Physics.IgnoreCollision(characterController, col);
         foreach (Rigidbody rb in AllRigibodys)
             rb.useGravity = false;
-
+        foreach (Rigidbody rb in AllRigibodys)
+            rb.isKinematic = true;
         DoRagdoll(false);
     }
     private void Update()
@@ -55,6 +56,8 @@ public class CharRagdoll : MonoBehaviour
             col.enabled = isRagdoll;
         foreach (Rigidbody rb in AllRigibodys)
             rb.useGravity = isRagdoll;
+        foreach (Rigidbody rb in AllRigibodys)
+            rb.isKinematic = !isRagdoll;
 
         animator.enabled = !isRagdoll;
         charController.enabled = !isRagdoll;
@@ -79,10 +82,10 @@ public class CharRagdoll : MonoBehaviour
         if (grounded)
         {
             verticalSpeed = -GameConstants.PLAYERS_GRAVITY * Time.deltaTime;
-            if (isOnRagdoll && !activatedCoroutine){
+            if (isOnRagdoll && !activatedCoroutine)
+            {
                 StartCoroutine(nameof(WakeUpPlayer));
             }
-
         }
         else
         {
@@ -91,7 +94,8 @@ public class CharRagdoll : MonoBehaviour
         characterController.Move((transform.up * verticalSpeed) * Time.deltaTime);
         grounded = characterController.isGrounded;
     }
-    IEnumerator WakeUpPlayer(){
+    IEnumerator WakeUpPlayer()
+    {
         Debug.Log("activando");
         activatedCoroutine = true;
         yield return new WaitForSeconds(2f);

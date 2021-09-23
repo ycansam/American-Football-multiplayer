@@ -23,7 +23,10 @@ public class AllyController : MonoBehaviour
         {
             if (Input.GetKeyDown(GameConstants.KEY_COLLECT) && isLocalPlayer)
             {
-                SetPlayerOnShoulder(other.transform);
+                if (!allyInPosession)
+                    SetPlayerOnShoulder(other.transform);
+                else
+                    ReleasePlayerInPosession();
             }
         }
     }
@@ -33,11 +36,14 @@ public class AllyController : MonoBehaviour
         {
             // si el jugador entra en el trigger de la bola este la recoge
             allyInPosession = allyPlayer.transform;
+            allyInPosession.rotation = playerShoulder.rotation;
             allyInPosession.SetParent(playerShoulder);
             allyInPosession.GetComponent<CharacterController>().enabled = false;
+            allyInPosession.GetComponent<CharController>().isOnShoulder = true;
+
         }
     }
-    
+
     // libera al jugador sin lanzarlo
     public void ReleasePlayerInPosession()
     {
@@ -45,8 +51,9 @@ public class AllyController : MonoBehaviour
         {
             // si el jugador entra en el trigger de la bola este la recoge
             allyInPosession.SetParent(null);
-            allyInPosession = null;
             allyInPosession.GetComponent<CharacterController>().enabled = true;
+            allyInPosession.GetComponent<CharController>().isOnShoulder = false;
+            allyInPosession = null;
         }
     }
 

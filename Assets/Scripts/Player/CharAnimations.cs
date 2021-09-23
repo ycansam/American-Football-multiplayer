@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class CharAnimations : MonoBehaviour
 {
+    [Header("Componentes")]
     private Animator animator;
     private CharController charController;
+    private AllyController allyController;
     public static float sprintFactor;
-
     private float timerJump = 1;
     [SerializeField] private float jumpTransitionSeconds;
-    float layerWeightJump;
+    private float layerWeightJump;
 
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
         charController = GetComponent<CharController>();
+        allyController = GetComponent<AllyController>();
         SetSprintMultipler(CharAnimations.sprintFactor);
         timerJump = jumpTransitionSeconds;
     }
@@ -34,6 +36,11 @@ public class CharAnimations : MonoBehaviour
 
             JumpAnimation();
         }
+
+        if (charController.isOnShoulder)
+            PlayerOnShoulder();
+        else
+            CatchingOtherPlayer();
     }
 
     private void RunAnimation(float horizontal, float vertical)
@@ -96,4 +103,45 @@ public class CharAnimations : MonoBehaviour
             layerWeightJump = (timerJump / jumpTransitionSeconds);
         }
     }
+
+    private void PlayerOnShoulder()
+    {
+        Debug.Log(gameObject.name);
+
+        if (transform.parent != null)
+        {
+            animator.SetBool(GameConstants.ANIMATOR_PARAMETER_ON_SHOULDER_STAY, true);
+
+            int index = animator.GetLayerIndex(GameConstants.ANIMATOR_LAYER_CATCHED);
+            animator.SetLayerWeight(index, 1);
+        }
+        else if (transform.parent)
+        {
+            animator.SetBool(GameConstants.ANIMATOR_PARAMETER_ON_SHOULDER_STAY, false);
+
+            int index = animator.GetLayerIndex(GameConstants.ANIMATOR_LAYER_CATCHED);
+            animator.SetLayerWeight(index, 0);
+        }
+
+    }
+
+    private void CatchingOtherPlayer()
+    {
+        if (allyController.allyInPosession)
+        {
+            animator.SetBool(GameConstants.ANIMATOR_PARAMETER_CATCHING_PLAYER, true);
+
+
+            int index = animator.GetLayerIndex(GameConstants.ANIMATOR_LAYER_CATCHING);
+            animator.SetLayerWeight(index, 1);
+        }
+        else
+        {
+            animator.SetBool(GameConstants.ANIMATOR_PARAMETER_CATCHING_PLAYER, false);
+
+            int index = animator.GetLayerIndex(GameConstants.ANIMATOR_LAYER_CATCHING);
+            animator.SetLayerWeight(index, 0);
+        }
+    }
+
 }

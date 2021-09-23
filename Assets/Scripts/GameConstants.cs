@@ -39,6 +39,9 @@ public static class GameConstants
     public const string  ANIMATOR_PARAMETER_AIMING = "AIMING";
     public const string  ANIMATOR_PARAMETER_SPRINT_MULTIPLIER = "SPRINT MULTIPLIER";
     public const string  ANIMATOR_PARAMETER_PLAYER_JUMPED = "JUMPED";
+    public const string  ANIMATOR_PARAMETER_CATCHING_PLAYER = "CATCHING PLAYER";
+    public const string  ANIMATOR_PARAMETER_ON_SHOULDER_STAY = "ON SHOULDER STAY";
+    
     [Header("Animations Layers")]
     public const string  ANIMATOR_LAYER_SPRINT = "Sprinting";
     public const string  ANIMATOR_LAYER_HORIZONTAL = "Horizontal";
@@ -46,4 +49,6 @@ public static class GameConstants
     public const string  ANIMATOR_LAYER_PUNCH = "Punch";
     public const string  ANIMATOR_LAYER_JUMP = "Jumping";
     public const string  ANIMATOR_LAYER_JUMPTOP = "JumpingTop";
+    public const string  ANIMATOR_LAYER_CATCHING = "Catching";
+    public const string  ANIMATOR_LAYER_CATCHED = "Catched";
 }

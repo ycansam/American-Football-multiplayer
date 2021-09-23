@@ -5,13 +5,16 @@ using UnityEngine;
 public class CharIKAnimator : MonoBehaviour
 {
     private Animator animator;
-    CharController charController;
+    private CharController charController;
+    private AllyController allyController;
     [SerializeField] Transform bodyLookingGameobject = null;
     [SerializeField] bool ikActive = false;
+   
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
         charController = GetComponentInParent<CharController>();
+        allyController = GetComponentInParent<AllyController>();
     }
     private void OnAnimatorIK(int layerIndex)
     {
@@ -37,12 +40,10 @@ public class CharIKAnimator : MonoBehaviour
                     SetWeightSprint(CharController.SprintWeight);
 
                     SetAnimationDirectionRunning(Input.GetAxisRaw(GameConstants.HORIZONTAL), Input.GetAxisRaw(GameConstants.VERTICAL));
-
-                    animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
+                    // animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
                 }
             }
         }
-
     }
 
     /// <summary ="SettingWeights()">
@@ -60,9 +61,12 @@ public class CharIKAnimator : MonoBehaviour
             animator.SetLookAtWeight(1); // se gira todo limitado
 
 
-        if (CamController.Aiming && !Input.GetKey(GameConstants.KEY_FREE_VISION)) // si esta apuntando el cuerpo se puede girar lo maximo posible
+        if (CamController.Aiming && !Input.GetKey(GameConstants.KEY_FREE_VISION) && !allyController.allyInPosession) // si esta apuntando el cuerpo se puede girar lo maximo posible
             animator.SetLookAtWeight(1, 1, 1, 1, 0);
-        else if (CamController.Aiming && Input.GetKey(GameConstants.KEY_FREE_VISION))
+        else if (CamController.Aiming && !Input.GetKey(GameConstants.KEY_FREE_VISION) && allyController.allyInPosession)
+            animator.SetLookAtWeight(1, 0.3f, 1, 1, 0);
+
+        else if (CamController.Aiming && Input.GetKey(GameConstants.KEY_FREE_VISION) || charController.isOnShoulder)
             animator.SetLookAtWeight(0);
 
 
@@ -111,4 +115,5 @@ public class CharIKAnimator : MonoBehaviour
         int index = animator.GetLayerIndex(GameConstants.ANIMATOR_LAYER_SPRINT);
         animator.SetLayerWeight(index, weight); // obtiene el peso en referencia al tiempo transcurrido sprintando
     }
+  
 }
