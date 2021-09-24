@@ -41,6 +41,7 @@ public static class GameConstants
     public const string  ANIMATOR_PARAMETER_PLAYER_JUMPED = "JUMPED";
     public const string  ANIMATOR_PARAMETER_CATCHING_PLAYER = "CATCHING PLAYER";
     public const string  ANIMATOR_PARAMETER_ON_SHOULDER_STAY = "ON SHOULDER STAY";
+    public const string  ANIMATOR_PARAMETER_FLYING = "FLYING";
     
     [Header("Animations Layers")]
     public const string  ANIMATOR_LAYER_SPRINT = "Sprinting";
@@ -51,4 +52,5 @@ public static class GameConstants
     public const string  ANIMATOR_LAYER_JUMPTOP = "JumpingTop";
     public const string  ANIMATOR_LAYER_CATCHING = "Catching";
     public const string  ANIMATOR_LAYER_CATCHED = "Catched";
+    public const string  ANIMATOR_LAYER_FLYING = "Flying";
 }

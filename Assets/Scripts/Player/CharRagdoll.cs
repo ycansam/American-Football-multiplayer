@@ -38,7 +38,9 @@ public class CharRagdoll : MonoBehaviour
 
     private void MoveRagdoll()
     {
-        if (!animator.enabled)
+        // if (!animator.enabled)
+        // {
+        if (impact.magnitude > 0.2f)
         {
             hips.position = new Vector3(transform.position.x, transform.position.y + 0.15f, transform.position.z);
             if (impact.magnitude > 0.2F) characterController.Move(impact * Time.deltaTime);

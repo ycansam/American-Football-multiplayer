@@ -880,7 +880,7 @@ GameObject:
   m_Component:
   - component: {fileID: 918080771034285451}
   m_Layer: 0
-  m_Name: TrhowBall
+  m_Name: ThrowPosition
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -917,6 +917,7 @@ GameObject:
   - component: {fileID: 918080771372864095}
   - component: {fileID: 918080771372864094}
   - component: {fileID: 9080665770436176522}
+  - component: {fileID: 7600083701739548108}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1075,6 +1076,22 @@ MonoBehaviour:
   playerShoulder: {fileID: 3909178656130737257}
   playerTrigger: {fileID: 918080771372864094}
   isLocalPlayer: 0
+--- !u!114 &7600083701739548108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918080771372864086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1ec629aa8c8474191a1a2e37855b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwPosition: {fileID: 918080771034285451}
+  minForce: 5
+  maxCharge: 30
+  timeToGetMaxCharge: 1.5
 --- !u!1 &948732350557539538
 GameObject:
   m_ObjectHideFlags: 0

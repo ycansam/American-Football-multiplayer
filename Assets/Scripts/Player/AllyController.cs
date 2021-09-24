@@ -40,7 +40,6 @@ public class AllyController : MonoBehaviour
             allyInPosession.SetParent(playerShoulder);
             allyInPosession.GetComponent<CharacterController>().enabled = false;
             allyInPosession.GetComponent<CharController>().isOnShoulder = true;
-
         }
     }
 

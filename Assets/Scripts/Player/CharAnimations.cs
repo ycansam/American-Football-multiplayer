@@ -28,6 +28,8 @@ public class CharAnimations : MonoBehaviour
 
     private void Update()
     {
+        Flying();
+
         if (charController.isLocalClient)
         {
             RunAnimation(Input.GetAxis(GameConstants.HORIZONTAL), Input.GetAxis(GameConstants.VERTICAL));
@@ -102,6 +104,12 @@ public class CharAnimations : MonoBehaviour
             timerJump -= Time.deltaTime;
             layerWeightJump = (timerJump / jumpTransitionSeconds);
         }
+    }
+    private void Flying()
+    {
+        int index = animator.GetLayerIndex(GameConstants.ANIMATOR_LAYER_FLYING);
+        animator.SetLayerWeight(index, System.Convert.ToSingle(charController.isFlying));
+        animator.SetBool(GameConstants.ANIMATOR_PARAMETER_FLYING, charController.isFlying);
     }
 
     private void PlayerOnShoulder()

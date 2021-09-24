@@ -14,6 +14,8 @@ public class CharController : MonoBehaviour
     private CharBallController charBallController;
     private ThrowBall throwBallController;
     private Rigidbody rb;
+    private ThrowPlayer throwPlayer;
+    private AllyController allyController;
 
     [Header("Move Settings")]
     [SerializeField] private float speed = 10f;
@@ -34,6 +36,9 @@ public class CharController : MonoBehaviour
     private bool punching = false;
     private bool hasBall;                   // si el jugador tiene la bola o no
     private Vector3 charDirection;
+    private bool hasPlayerOnShoulder;
+    [HideInInspector] public bool isFlying = false;
+
 
     private float vertical_axis;
     private float horizontal_axis;
@@ -68,6 +73,9 @@ public class CharController : MonoBehaviour
         charBallController = GetComponent<CharBallController>();
         throwBallController = GetComponent<ThrowBall>();
         rb = GetComponent<Rigidbody>();
+        throwPlayer = GetComponent<ThrowPlayer>();
+        allyController = GetComponent<AllyController>();
+
         gravity = GameConstants.PLAYERS_GRAVITY;
 
         // pasando los valores del multiplicador a las animaciones
@@ -81,13 +89,13 @@ public class CharController : MonoBehaviour
 
     void Update()
     {
-
         if (isLocalClient)
         {
             GetInput();
 
             PlayerShield();
             PlayerWithBallActions();
+            ActionsWithPlayerOnShoulder();
 
             if (!sprinting)
             {
@@ -127,6 +135,7 @@ public class CharController : MonoBehaviour
         aiming = CamController.Aiming;
         hasBall = charBallController.ballInPossesion; // control sobre la bola. Si exite true, else not
         punching = Input.GetButton(GameConstants.BUTTON_FIRE1);
+        hasPlayerOnShoulder = allyController.allyInPosession;
 
         // reseteo el sprint si el jugador va a izquierda o derecha
         if (Input.GetAxis(GameConstants.HORIZONTAL) > 0.2f
@@ -155,6 +164,22 @@ public class CharController : MonoBehaviour
             startedCharge = false;
             throwBallController.ThrowWithCharge(throwBallController.trhowBallPosition, charBallController.ballInPossesion, ActualSpeed, throwBallController.trhowBallPosition.forward);
             charBallController.RemoveParentFromBall();
+        }
+    }
+
+    private void ActionsWithPlayerOnShoulder()
+    {
+        bool throwing = Input.GetButton(GameConstants.BUTTON_FIRE1);
+        if (aiming && throwing && hasPlayerOnShoulder)
+        {
+            // se carga la bola para lanzarse
+            startedCharge = throwPlayer.ChargeThrow();
+        }
+        else if (!throwing && hasPlayerOnShoulder && startedCharge)
+        {
+            // cuando se suelta el boton se dispara la bola y la libera
+            startedCharge = false;
+            throwPlayer.ThrowWithCharge();
         }
     }
 
@@ -352,21 +377,21 @@ public class CharController : MonoBehaviour
             CharRagdoll charRagdoll = other.transform.GetComponentInChildren<CharRagdoll>();
             CharBallController enemyBallController = other.GetComponent<CharBallController>();
 
-            // if (ActualSpeed > 1f && !charRagdoll.isOnRagdoll)
-            // {
-            //     charRagdoll.DoRagdoll(true);
-            //     charRagdoll.AddImpact(this.transform.forward + this.transform.up, 15f);
+            if (ActualSpeed >= speed+3f && !charRagdoll.isOnRagdoll)
+            {
+                charRagdoll.DoRagdoll(true);
+                charRagdoll.AddImpact(this.transform.forward + this.transform.up, 15f);
 
-            //     // si posee la bola
-            //     if (enemyBallController.ballInPossesion)
-            //     {
-            //         ThrowBall enemyTrhowBall = other.GetComponent<ThrowBall>();
-                    
-            //         // enemyBallController.ballInPossesion.GetComponent<BallScrpt>().WakeUpAllComponents();
-            //         enemyTrhowBall.Throw(enemyTrhowBall.onRagdollTrhowPosition, enemyBallController.ballInPossesion, 25f, enemyTrhowBall.onRagdollTrhowPosition.up );
-            //         enemyBallController.RemoveParentFromBall();
-            //     }
-            // }
+                // si posee la bola
+                if (enemyBallController.ballInPossesion)
+                {
+                    ThrowBall enemyTrhowBall = other.GetComponent<ThrowBall>();
+
+                    // enemyBallController.ballInPossesion.GetComponent<BallScrpt>().WakeUpAllComponents();
+                    enemyTrhowBall.Throw(enemyTrhowBall.onRagdollTrhowPosition, enemyBallController.ballInPossesion, 25f, enemyTrhowBall.onRagdollTrhowPosition.up );
+                    enemyBallController.RemoveParentFromBall();
+                }
+            }
         }
     }
 }
